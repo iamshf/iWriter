@@ -1,0 +1,6 @@
+[submodule "CommLib/MiniRest"]
+	path = CommLib/MiniRest
+	url = git@github.com:iamshf/MiniRest.git
+[submodule "CommLib/jQueryPlugin"]
+	path = CommLib/jQueryPlugin
+	url = git@github.com:iamshf/jQueryPlugin.git
