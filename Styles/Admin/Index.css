@@ -1,0 +1,14 @@
+html,body{
+    font-size:10px;
+    text-align:center;
+}
+form{
+    margin:20% auto auto auto;
+    width:80%;
+    max-width:30rem;
+}
+input {
+    margin:0.5rem;
+    width:90%;
+    height:2.5rem;
+}

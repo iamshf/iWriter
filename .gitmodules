@@ -4,3 +4,6 @@
 [submodule "CommLib/jQueryPlugin"]
 	path = CommLib/jQueryPlugin
 	url = git@github.com:iamshf/jQueryPlugin.git
+[submodule "CommLib/PasswordCompat"]
+	path = CommLib/PasswordCompat
+	url = git@github.com:ircmaxell/password_compat.git

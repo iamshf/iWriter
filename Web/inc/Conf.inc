@@ -34,6 +34,7 @@
             $path = Conf::FILE_PATH .
             strtr($classname, array(
                 'MiniRest\\' => 'CommLib/MiniRest/Class/',
+                'iWriter\\Common' => 'CommLib/Common/',
                 'iWriter\\'=>'',
                 "\\"=>"/"
             )).'.php';
@@ -42,12 +43,13 @@
             }
             else {
                 echo '<br />',$classname,'<br />', $path,'<br />';
+                exit;
             }
         }
         /**
          * 设置错误显示级别
          */
-        private function setError(){
+        private function setError() {
             ini_set('display_errors', 'On');
             error_reporting(E_ALL);
         }
@@ -75,7 +77,6 @@
                 )
             );
         }
-
     }
     $conf = new Conf();
     $conf->init();
