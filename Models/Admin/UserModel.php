@@ -83,5 +83,8 @@ namespace iWriter\Models\Admin {
         private function verifyColumns() {
             return array_key_exists('columns', $this->_data) && Validate::sqlParam($this->_data['columns']);
         }
+        private function verifyCount(){
+            return array_key_exists('count', $this->_data) && is_numeric($this->_data['count']);
+        }
     }
 }

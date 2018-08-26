@@ -40,7 +40,9 @@ namespace iWriter\Common {
                 && 
                 stristr($param, 'grant') === false
                 && 
-                stristr($param, 'revoke') === false;
+                stristr($param, 'revoke') === false
+                && 
+                stristr($param, 'drop') === false;
         }
     }
 }

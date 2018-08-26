@@ -16,14 +16,19 @@ namespace iWriter\Controllers\Admin {
         }
         public function postJson() {
             $this->_headers[] = 'Content-Type: application/json';
-            $model = new UserModel($this->_request->_data);
+            $model = new UserModel(array_merge(array('count' => 1, 'columns' => 'id,name,pwd'), $this->_request->_data));
             if($model->verifyName() && $model->verifyPwd()) {
-                $this->_body = $this->getJsonResult(1, '成功', $this->_request->_data);
+                $result = $model->get();
+                if($result !== false && !empty($result) && $model->comparePwd($this->_request->_data['pwd'], $result['pwd'])) {
+                    $this->_body = $this->getJsonResult(1, '成功', 200, array('location' => './default'));
+                }
+                else {
+                    $this->_body = $this->getJsonResult(2, '帐号或密码不正确', 404);
+                }
             }
             else {
-                $this->_body = $this->getJsonResult(0, '请求非法');
+                $this->_body = $this->getJsonResult(0, '请求非法', 400);
             }
-            //$this->_body = '{"code": 1, "msg": "成功"}';
         }
     }
 }

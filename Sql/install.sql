@@ -18,5 +18,18 @@ create table user(
     id int unsigned primary key auto_increment comment 'id', 
     name varchar(20) not null comment '登录名',
     pwd varchar(255) not null comment '密码',
-    gmt_add timestamp not null default current_timestamp comment '添加时间'
+    gmt_add timestamp not null default current_timestamp comment '添加时间',
+    unique key uk_name (name)
+)engine = myisam default charset=utf8;
+
+drop table if exists category;
+create table category (
+    id int unsigned primary key auto_increment comment 'id',
+    name varchar(20) not null default '' comment 'category name',
+    pid int unsigned not null default 0 comment '父节点id',
+    lv int unsigned not null comment '左值',
+    rv int unsigned not null comment '右值',
+    deep int unsigned not null comment '层级深度',
+    enabled tinyint unsigned not null default 1 comment '0-禁用；1-启用',
+    remark varchar(100) not null default '' comment '备注'
 )engine = myisam default charset=utf8;

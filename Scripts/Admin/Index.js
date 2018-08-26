@@ -5,10 +5,12 @@
 
     function initEvent() {
         $("form").on("submit", function(){
-            submit().done(function(){
-                alert("成功");
-            }).fail(function(){
-                alert("失败");
+            $("#btnSubmit").val("正在登陆…").attr("disabled", "disabled");
+            submit().done(function(rep_data, textStatus, jqXHR){
+                location.href = rep_data["data"]["location"];
+            }).fail(function(jqXHR, textStatus, err){
+                $("#btnSubmit").val("登陆").removeAttr("disabled");
+                alert(jqXHR.responseJSON.msg);
             });
             return false;
         });

@@ -4,10 +4,10 @@
          * php 5.4 不支持使用复杂类型的const常量，暂时使用静态变量代替
          */
         public static $DB_CONF = array(
-            'DB_RW' => array('server' => '127.0.0.1', 'database' => 'bsccedu_cn', 'username' => 'BothWebUser', 'password' => 'Both_Web_User@654321', 'dbtype' => 'mysql', 'charset' => 'utf8'),
+            'DB_RW' => array('server' => '127.0.0.1', 'database' => 'iWriter', 'username' => 'root', 'password' => 'root', 'dbtype' => 'mysql', 'charset' => 'utf8'),
             'DB_R' => array(
-                array('server' => '127.0.0.1', 'database' => 'bsccedu_cn', 'username' => 'BothWebUser', 'password' => 'Both_Web_User@654321', 'dbtype' => 'mysql', 'charset' => 'utf8'),
-                array('server' => '127.0.0.1', 'database' => 'bsccedu_cn', 'username' => 'BothWebUser', 'password' => 'Both_Web_User@654321', 'dbtype' => 'mysql', 'charset' => 'utf8')
+                array('server' => '127.0.0.1', 'database' => 'iWriter', 'username' => 'root', 'password' => 'root', 'dbtype' => 'mysql', 'charset' => 'utf8'),
+                array('server' => '127.0.0.1', 'database' => 'iWriter', 'username' => 'root', 'password' => 'root', 'dbtype' => 'mysql', 'charset' => 'utf8')
             )
         );
         public static $MEM_CONF = array(
@@ -19,7 +19,7 @@
         const CONTROLLER_NAMESPACE = '\\iWriter\\Controllers\\';
         const CONTROLLER_SUFFIX = 'Controller';
 
-        const FILE_PATH = '/home/shf/mydata/documents/work/project/iWriter/';
+        const FILE_PATH = '/home/shf/Documents/Work/Project/iWriter/';
 
         public function init(){
             $this->setError();
