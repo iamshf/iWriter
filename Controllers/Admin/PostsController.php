@@ -24,7 +24,6 @@ namespace iWriter\Controllers\Admin {
             else {
                 $this->_body = $this->getJsonResult(0, '请求非法', 404);
             }
-            
         }
         public function postJson() {
             $this->_headers[] = 'Content-Type: application/json';

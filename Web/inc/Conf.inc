@@ -58,6 +58,10 @@
             $route = new MiniRest\Route();
             $route->addRoutes(
                 array(
+                    'post' => array(
+                        'url' => '/(?<controller>post)/(?<id>\d+)',
+                        'status' => true
+                    ),
                     'media' => array(
                         'url' => '(/(?<module_name>[a-zA-Z0-9]+))?/(?<controller>media)/(?<path>[\w/\.]*(?<filename>[\w-]+)\.(?<extension>(jpg|gif|png|svg|mp3|mp4)))\w?',
                         'status' => true
