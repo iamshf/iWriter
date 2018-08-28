@@ -1,0 +1,29 @@
+html,body{
+    margin:0;
+    padding:0;
+}
+html{
+    font-size:10px;
+}
+body{
+    font-size:1.4rem;
+    color:rgb(68,68,68);
+}
+header{
+    padding-top:3.5rem;
+    border-bottom:1px solid rgb(238,238,238);
+}
+header nav {
+    margin:0 auto;
+    padding:0;
+    width:80%;
+}
+header nav a{
+    margin:0;
+    padding:0 1rem;
+    height:inherit;
+    color:rgb(68,68,68);
+    border:1px solid rgb(238,238,238);
+    border-collapse:collapse;
+    text-decoration:none;
+}
