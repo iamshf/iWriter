@@ -11,10 +11,10 @@
     function bindPosts(data) {
         for(var i = 0, l = data.length; i < l; i++) {
             $("#main").append("<article></article>");
-            $("#main article").first().append("<h4>" + data[i]["gmt_modify"] + "</h4>");
-            $("#main article").first().append("<h1><a href=\"post/" + data[i]["id"] + "\">" + data[i]["title"] + "</a></h4>");
-            $("#main article").first().append("<div>" + data[i]["subtitle"] + "</div>");
-            $("#main article").first().append("<div>" + data[i]["foreword"] + "</div>");
+            $("#main article").last().append("<h4>" + data[i]["gmt_modify"] + "</h4>");
+            $("#main article").last().append("<h1><a href=\"post/" + data[i]["id"] + "\">" + data[i]["title"] + "</a></h4>");
+            $("#main article").last().append($.trim(data[i]["subtitle"]) != "" ? "<div>" + data[i]["subtitle"] + "</div>" : "");
+            $("#main article").last().append($.trim(data[i]["foreword"]) != "" ? "<div>" + data[i]["foreword"] + "</div>" : "");
         }
     }
     function getPosts(){

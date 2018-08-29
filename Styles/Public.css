@@ -10,6 +10,7 @@ body{
     color:rgb(68,68,68);
 }
 header{
+    margin-bottom:3rem;
     padding-top:3.5rem;
     border-bottom:1px solid rgb(238,238,238);
 }
@@ -26,4 +27,10 @@ header nav a{
     border:1px solid rgb(238,238,238);
     border-collapse:collapse;
     text-decoration:none;
+}
+article{
+    margin-bottom:3rem;
+}
+article h1,article h4{
+    margin:0;
 }
