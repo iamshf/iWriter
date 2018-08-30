@@ -1,5 +1,6 @@
 <?php
 namespace iWriter\Models\Admin {
+    use iWriter\Common\MyPdo;
     class RelCategoryPostModel {
         private $_data;
         public function __construct($data = array()) {
@@ -17,7 +18,10 @@ namespace iWriter\Models\Admin {
                     )
                 );
             }
-            $myPdo->exec('delete from rel_category_post where post_id = :post_id and category_id not in (' . implode(', ', $this->_data['category_ids']) . ')');
+            $myPdo->exec(
+                'delete from rel_category_post where post_id = :post_id and category_id not in (' . implode(', ', $this->_data['category_ids']) . ')',
+                array(':post_id' => array('value' => $this->_data['post_id'], 'dataType' => \PDO::PARAM_INT))
+            );
 
             return true;
         }

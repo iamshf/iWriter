@@ -3,6 +3,7 @@
     $(function(){
         bindCategorys();
         initEditor();
+        initEvent();
     });
     function bindCategorys(){
         getCategorys().done(function(data, textStatus, jqXHR){
@@ -16,7 +17,7 @@
                 for(var x = 1; x < category["deep"]; x++) {
                     last.append("&nbsp;&nbsp;&nbsp;&nbsp;");
                 }
-                last.append("<input type=\"checkbox\" id=\"category_" + category["id"] + "\" name=\"category\" value=\"" + category["id"] + "\" />");
+                last.append("<input type=\"checkbox\" id=\"category_" + category["id"] + "\" name=\"category_ids[]\" value=\"" + category["id"] + "\" />");
                 last.append("<label for=\"category_" + category["id"] + "\">" + category["name"] + "</label>");
             }
         });
@@ -27,6 +28,24 @@
             editor = K.create("#content", {
                 "width": "100%"
             });
+        });
+    }
+    function initEvent(){
+        $("form").on("submit", function(){
+            editor.sync();
+            save().done(function(rep_data, textStatus, jqXHR){
+                alert(jqXHR.responseText);
+            }).fail(function(jqXHR, textStatus, err){
+                alert(jqXHR.responseText);
+            });
+            return false;
+        });
+        $("#btnSubmit").on("click", function(){ 
+            $("#hidStatus").val("1");
+        });
+        $("#btnPreview").on("click", function(){ 
+            $("#hidStatus").val("2");
+            return $("form").submit();
         });
     }
 

@@ -67,7 +67,11 @@ namespace iWriter\Models\Admin {
             );
             $myPdo = MyPdo::init();
             $myPdo->exec($sql, $params);
-            return $myPdo->lastInsertId();
+            $id = $myPdo->lastInsertId();
+            if($id > 0) {
+                $this->saveRelCategoryPost($id);
+            }
+            return $id;
         }
         public function update(){
             $sql = 'update post set gmt_modify = from_unixtime(:gmt_modify)';
@@ -98,7 +102,13 @@ namespace iWriter\Models\Admin {
             }
 
             $sql .= ' where id = :id';
-            return MyPdo::init()->exec($sql, $params);
+            $result = MyPdo::init()->exec($sql, $params);
+            $this->saveRelCategoryPost($this->_data['id']);
+            return $result;
+        }
+        private function saveRelCategoryPost($post_id){
+            $model = new RelCategoryPostModel(array('post_id' => $post_id, 'category_ids' => $this->_data['category_ids']));
+            return $model->save();
         }
 
         private function verifyTitle() {
