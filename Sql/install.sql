@@ -33,3 +33,10 @@ create table category (
     enabled tinyint unsigned not null default 1 comment '0-禁用；1-启用',
     remark varchar(100) not null default '' comment '备注'
 )engine = myisam default charset=utf8;
+
+drop table if exists rel_category_post;
+create table rel_category_post (
+    post_id int unsigned not null,
+    category_id int unsigned not null,
+    primary key (post_id,category_id)
+);

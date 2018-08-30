@@ -3,14 +3,27 @@
     <head>
         <meta charset="UTF-8">
         <title></title>
+        <link rel="stylesheet" type="text/css" href="/css/admin/post" />
     </head>
     <body>
-        <textarea id="test"></textarea>
+        <form>
+            <fieldset>
+                <input type="text" id="title" name="title" placeholder="请输入标题" required="required" maxlength="100" /> 
+                <input type="text" id="subtitle" name="subtitle" placeholder="副标题" maxlength="100" /> 
+                <textarea id="foreword" name="foreword" placeholder="引言"></textarea>
+                <textarea id="content" name="content" placeholder="内容"></textarea>
+
+                <input type="submit" id="btnSubmit" value="保存" />
+                <input type="button" id="btnPreview" value="预览" />
+            </fieldset>
+            <fieldset>
+                <label>分类</label>
+            </fieldset>
+        </form>
+        <script src="//cdn.jsdelivr.net/npm/jquery@3"></script>
         <script src="//cdn.jsdelivr.net/npm/kindeditor@4.1.10/kindeditor-all.min.js"></script>
+        <script src="/js/admin/post"></script>
         <script>
-            KindEditor.ready(function(K) {
-                window.editor = K.create('#test');
-            });
         </script>
     </body>
 </html>

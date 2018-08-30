@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="/css/admin/category" />
+</head>
+<body>
+    <div id=""></div>
+    <form>
+        <input type="number" id="category_id" name="id" min="1" readonly="readonly" placeholder="请选择要操作的节点" required="required" />
+        <input type="number" id="category_pid" name="pid" min="0" readonly="readonly" placeholder="请选择要操作的节点" value="0" required="required" />
+        <input type="text" id="category_name" name="name" placeholder="请输入分类名称" maxlength="10" required="required" />
+        <textarea id="category_remark" name="remark" placeholder="请输入备注"></textarea>
+    </form>
+    <script src="//cdn.jsdelivr.net/npm/jquery@3"></script>
+    <script src="/js/admin/category"></script>
+</body>
+</html>

@@ -45,6 +45,15 @@ namespace iWriter\Models\Admin {
             $rowCount = $result->rowCount();
             return $rowCount > 0 ? ($rowCount == 1 ? ($count == 1 ? $result->fetch(\PDO::FETCH_ASSOC) : array($result->fetch(\PDO::FETCH_ASSOC))) : $result->fetchAll(\PDO::FETCH_ASSOC)) : false;
         }
+        public function save() {
+            if($this->verifyId() && $this->isIdExists()) {
+                $this->update();
+                return $this->_data['id'];
+            }
+            else {
+                return $this->add();
+            }
+        }
         public function add(){
             $sql = 'insert into post (title, subtitle, foreword, content, gmt_add, gmt_modify, status) values (:title, :subtitle, :foreword, :content, from_unixtime(:gmt_add), from_unixtime(:gmt_modify), :status)';
             $params = array(
@@ -89,7 +98,6 @@ namespace iWriter\Models\Admin {
             }
 
             $sql .= ' where id = :id';
-            //var_dump($sql, $params);exit;
             return MyPdo::init()->exec($sql, $params);
         }
 
@@ -113,6 +121,9 @@ namespace iWriter\Models\Admin {
         }
         private function verifyCount(){
             return array_key_exists('count', $this->_data) && is_numeric($this->_data['count']);
+        }
+        private function isIdExists() {
+            return MyPdo::init('r')->isExists('select 1 from post where id = :id', array(':id' => $this->_data['id'], 'dataType' => \PDO::PARAM_INT));
         }
     }
 }

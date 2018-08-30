@@ -1,0 +1,42 @@
+html, body{
+    margin:0;
+    padding:0;
+}
+html{font-size:20px;}
+body {
+    background:rgb(246,246,243);
+    font-size:0.7rem;
+}
+form{
+    margin:0 auto;
+    width:80%;
+    max-width:51.2rem;
+    display:flex;
+    flex-flow:row wrap;
+}
+form fieldset{
+    border:none;
+}
+form fieldset:first-child {
+    margin:0 1rem 0 0;
+    padding:0 2rem;
+    text-align:center;
+}
+form fieldset:first-child input[type="text"], form fieldset:first-child textarea {
+    margin:0.5rem auto;
+    width:100%;
+}
+form fieldset:last-child {
+    min-width:7.5rem;
+}
+#categorys{
+    margin:0;
+    padding:1rem;
+    width:100%;
+    height:auto;
+    background:rgb(255, 255, 255);
+    list-style:none;
+}
+#categorys li{
+    margin:0.3rem 0;
+}
