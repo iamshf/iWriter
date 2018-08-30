@@ -39,4 +39,4 @@ create table rel_category_post (
     post_id int unsigned not null,
     category_id int unsigned not null,
     primary key (post_id,category_id)
-);
+)engine = myisam default charset=utf8;
