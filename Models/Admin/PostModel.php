@@ -2,6 +2,7 @@
 namespace iWriter\Models\Admin {
     use iWriter\Common\MyPdo;
     use iWriter\Common\Validate;
+    use iWriter\Models\Admin\CategoryModel;
     class PostModel {
         private $_data;
         public function __construct($data = array()) {
@@ -13,6 +14,35 @@ namespace iWriter\Models\Admin {
         }
         public function verifyContent() {
             return array_key_exists('content', $this->_data) && !empty($this->_data['content']);
+        }
+        public function getViews(){
+            $views = array(
+                'title' => '', 
+                'subtitle' => '', 
+                'foreword' => '', 
+                'content' => '', 
+                'categories' => array(),
+                'post_categories' => array()
+            );
+            $categories = $this->getCategories();
+            if($categories !== false && !empty($categories)) {
+                $views['categories'] = $categories;
+            }
+
+            if($this->verifyId()) {
+                $post = $this->get();
+                if($post !== false && !empty($post)) {
+                    $views = array_merge($views, $post);
+                }
+                $post_categories = $this->getRelCategoryPost();
+                if($post_categories !== false && !empty($post_categories)) {
+                    foreach($post_categories as $item) {
+                        $views['post_categories'][] = $item['category_id'];
+                    }
+                }
+            }
+
+            return $views;
         }
         public function get() {
             $columns = $this->verifyColumns() ? $this->_data['columns'] : 'id,title,subtitle,foreword,content';
@@ -113,6 +143,15 @@ namespace iWriter\Models\Admin {
         private function saveRelCategoryPost($post_id){
             $model = new RelCategoryPostModel(array('post_id' => $post_id, 'category_ids' => $this->_data['category_ids']));
             return $model->save();
+        }
+        private function getCategories() {
+            $model = new CategoryModel(array('deep' => '*'));
+            $model->initReadDB();
+            return $model->get();
+        }
+        private function getRelCategoryPost() {
+            $model = new RelCategoryPostModel(array('post_id' => $this->_data['id'], 'columns' => 'category_id'));
+            return $model->get();
         }
 
         private function verifyTitle() {

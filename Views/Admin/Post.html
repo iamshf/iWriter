@@ -8,17 +8,31 @@
     <body>
         <form>
             <fieldset>
-                <input type="text" id="title" name="title" placeholder="请输入标题" required="required" maxlength="100" /> 
-                <input type="text" id="subtitle" name="subtitle" placeholder="副标题" maxlength="100" /> 
-                <textarea id="foreword" name="foreword" placeholder="引言"></textarea>
-                <textarea id="content" name="content" placeholder="内容"></textarea>
-                <input type="hidden" id="hidStatus" name="status" value="2" />
+                <input type="hidden" name="id" value="<?php echo $id; ?>" />
+                <input type="text" id="title" name="title" placeholder="请输入标题" required="required" maxlength="100" value="<?php echo $title; ?>" /> 
+                <input type="text" id="subtitle" name="subtitle" placeholder="副标题" maxlength="100" value="<?php echo $title; ?>" /> 
+                <textarea id="foreword" name="foreword" placeholder="引言"><?php echo $title; ?></textarea>
+                <textarea id="content" name="content" placeholder="内容"><?php echo $title; ?></textarea>
+                <input type="hidden" id="hidStatus" name="status" value="<?php echo $status; ?>" />
 
                 <input type="submit" id="btnSubmit" value="保存" />
                 <input type="button" id="btnPreview" value="预览" />
             </fieldset>
             <fieldset>
                 <label>分类</label>
+                <ul id="categories">
+                    <?php 
+                        foreach($categories as $category) {
+                            echo '<li>';
+                            for($i = 1; $i < $category['deep']; $i++) {
+                                echo '&nbsp;&nbsp;&nbsp;&nbsp;';
+                            }
+                            echo '<input type="checkbox" id="category_', $category['id'], '" name="category_ids[]" value="', $category['id'], '"', (in_array($category['id'], $post_categories) ? ' checked="checked"' : ''), ' />';
+                            echo '<label for="category_', $category['id'], '">', $category['name'], '</label>';
+                            echo '</li>';
+                        }
+                    ?>
+                </ul>
             </fieldset>
         </form>
         <script src="//cdn.jsdelivr.net/npm/jquery@3"></script>

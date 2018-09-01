@@ -18,7 +18,11 @@
     function bindData(data) {
         var tb = $("#tbList");
         for(var i = 0, l = data.length; i < l; i++) {
-            $("#tbList").append("<tr><td>" + data[i]["title"] + "</td><td>" + data[i]["status"] + "</td></tr>");
+            $("#tbList").append("<tr></tr>");
+
+            $("#tbList tr:last").append("<td>" + data[i]["title"] + "</td>");
+            $("#tbList tr:last").append("<td>" + (data[i]["status"] == 0 ? "禁用" : (data[i]["status"] == 1 ? "正常" : "草稿")) + "</td>");
+            $("#tbList tr:last").append("<td><a href=\"./post/" + data[i]["id"] + "\">编辑</a></td>");
         }
     }
     function get(){

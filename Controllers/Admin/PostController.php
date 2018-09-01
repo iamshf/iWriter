@@ -12,7 +12,9 @@ namespace iWriter\Controllers\Admin {
             $this->_headers[] = 'Cache-Control: max-age=' . $expire;
 
             $this->_headers[] = 'Last-Modified: ' . gmdate("D, d M Y H:i:s", filemtime($file)) . ' GMT';
-            $this->_body = $this->render($file);
+
+            $model = new PostModel($this->_request->_data);
+            $this->_body = $this->render($file, $model->getViews());
         }
     }
 }

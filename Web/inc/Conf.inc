@@ -19,7 +19,8 @@
         const CONTROLLER_NAMESPACE = '\\iWriter\\Controllers\\';
         const CONTROLLER_SUFFIX = 'Controller';
 
-        const FILE_PATH = '/home/shf/Documents/Work/Project/iWriter/';
+        //const FILE_PATH = '/home/shf/Documents/Work/Project/iWriter/';
+        const FILE_PATH = '/home/shf/mydata/documents/work/project/iWriter/';
 
         public function init(){
             $this->setError();
@@ -59,7 +60,7 @@
             $route->addRoutes(
                 array(
                     'post' => array(
-                        'url' => '/(?<controller>post)/(?<id>\d+)',
+                        'url' => '/(?<controller>(admin/)?post)/(?<id>\d+)',
                         'status' => true
                     ),
                     'media' => array(
