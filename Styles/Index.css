@@ -1,1 +1,20 @@
-body{}
+#main {
+    margin:0 auto;
+    max-width:51.2rem;
+    display:flex;
+    flex-flow:row nowrap;
+}
+#articles {
+    margin-right:3rem;
+}
+#categories{
+    max-width:15rem;
+    list-style:none;
+    display:flex;
+    flex-flow:column nowrap;
+    justify-content:flex-start;
+}
+#categories a{
+    font-size:1rem;
+    cursor:pointer;
+}

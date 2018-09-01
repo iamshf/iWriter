@@ -35,6 +35,10 @@ namespace iWriter\Models\Admin {
                 $sqlWhere[] = '(title like :search or subtitle like :search or foreword like :search or content like :search)';
                 $params[':search'] = array('value' => ('%' . $this->_data['name'] . '%'), 'dataType' => \PDO::PARAM_STR);
             }
+            if($this->verifyCategoryId()) {
+                $sqlWhere[] = 'id in (select post_id from rel_category_post where category_id = :category_id)';
+                $params[':category_id'] = array('value' => $this->_data['category_id'], 'dataType' => \PDO::PARAM_INT);
+            }
             if(count($sqlWhere) > 0) {
                 $sql .= ' where ' . implode(' and ', $sqlWhere);
             }
@@ -68,7 +72,7 @@ namespace iWriter\Models\Admin {
             $myPdo = MyPdo::init();
             $myPdo->exec($sql, $params);
             $id = $myPdo->lastInsertId();
-            if($id > 0) {
+            if($id > 0 && $this->verifyCategoryIds()) {
                 $this->saveRelCategoryPost($id);
             }
             return $id;
@@ -103,7 +107,7 @@ namespace iWriter\Models\Admin {
 
             $sql .= ' where id = :id';
             $result = MyPdo::init()->exec($sql, $params);
-            $this->saveRelCategoryPost($this->_data['id']);
+            if($this->verifyCategoryIds()) {$this->saveRelCategoryPost($this->_data['id']);}
             return $result;
         }
         private function saveRelCategoryPost($post_id){
@@ -131,6 +135,12 @@ namespace iWriter\Models\Admin {
         }
         private function verifyCount(){
             return array_key_exists('count', $this->_data) && is_numeric($this->_data['count']);
+        }
+        private function verifyCategoryIds(){
+            return array_key_exists('category_ids', $this->_data) && is_array($this->_data['category_ids']);
+        }
+        private function verifyCategoryId(){
+            return array_key_exists('category_id', $this->_data) && is_numeric($this->_data['category_id']) && $this->_data['category_id'] > 0;
         }
         private function isIdExists() {
             return MyPdo::init('r')->isExists('select 1 from post where id = :id', array(':id' => $this->_data['id'], 'dataType' => \PDO::PARAM_INT));
