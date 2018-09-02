@@ -1,0 +1,23 @@
+html,body{
+    margin:0;
+    padding:0;
+}
+html{
+    font-size:20px;
+}
+body{
+    font-size:0.7rem;
+    color:rgb(68,68,68);
+    background:rgb(246, 246, 243);
+}
+header {
+    padding:0.5rem 0;
+    background:rgb(41, 45, 51);
+}
+header nav{
+    margin:0 0 0 1rem;
+}
+header nav a{
+    color:rgb(187, 187, 187);
+    text-decoration:none;
+}

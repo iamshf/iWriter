@@ -12,6 +12,7 @@ body{
 header{
     margin-bottom:1.5rem;
     padding-top:1.75rem;
+    padding-bottom:1.25rem;
     border-bottom:0.05rem solid rgb(238,238,238);
 }
 header a{
@@ -20,7 +21,7 @@ header a{
     font-size:2rem;
     text-decoration:none;
 }
-@media all and  (max-width: 51rem) {
+@media all and  (max-width: 51.2rem) {
     header a{
         margin-left:1rem;
     }
@@ -41,9 +42,46 @@ header nav a{
     border-collapse:collapse;
     text-decoration:none;
 }
-article{
-    margin-bottom:1.5rem;
+#main {
+    margin:0 auto;
+    max-width:51.2rem;
+    display:flex;
+    flex-flow:row nowrap;
 }
-article h1,article h4{
+#articles {
+    flex:1 1 auto;
+}
+article {
+    padding:0.75rem 0 1rem 0;
+    border-bottom:1px solid rgb(238, 238, 238);
+}
+article h1 {
+    margin:0 0 0.8rem 0;
+    font-size:1rem;
+}
+article h1 a{
+    color:rgb(51,84,170);
+    text-decoration:none;
+}
+article h1 a:hover{
+    color:rgb(68, 68, 68);
+}
+article h4{
     margin:0;
+    color:rgb(153,153,153);
+}
+#categories{
+    margin-left:1.5rem;
+    padding:1rem;
+    width:auto;
+    list-style:none;
+    display:flex;
+    flex-flow:column nowrap;
+    justify-content:flex-start;
+}
+#categories a{
+    margin:0.2rem;
+    cursor:pointer;
+    color:rgb(70,123,150);
+    text-decoration:none;
 }

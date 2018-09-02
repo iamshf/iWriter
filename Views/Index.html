@@ -1,18 +1,34 @@
 <!DOCTYPE html>
 <html lang="zh">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="/css/public" />
-    <link rel="stylesheet" type="text/css" href="/css/index" />
-</head>
-<body>
-    <?php require_once 'Top.html'; ?>
-    <div id="main">
-        <div id="articles"></div>
-    </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+        <meta name="viewport" content="width=device-width,maximum-scale=1.0,user-scalable=1">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <title>Fent Home</title>
+        <link rel="stylesheet" type="text/css" href="/css/public" />
+        <link rel="stylesheet" type="text/css" href="/css/index" />
+    </head>
+    <body>
+        <?php require_once 'Header.html'; ?>
+        <div id="main">
+            <div id="articles">
+                <?php
+                    foreach($posts as $post) {
+                        echo '<article>';
+                            echo '<h4>', $post['gmt_modify'], '</h4>';
+                            if(!empty($post['title'])) {echo '<h1><a href="/post/', $post['id'], '">', $post['title'], '</a></h1>';}
+                            if(!empty($post['subtitle'])) {echo '<h2>', $post['subtitle'], '</h2>';}
+                            if(!empty($post['foreword'])) { echo '<div>', $post['foreword'], '</div>';}
+                            //if(!empty($post['content'])) {echo '<div>', $post['content'], '</div>';}
+                        echo '</article>';
+                    }
+                ?>
+            </div>
+            <?php require_once 'Category.php'; ?>
+        </div>
 
-    <script src="//cdn.jsdelivr.net/npm/jquery@3"></script>
-    <script src="/js/index"></script>
-</body>
+        <script src="//cdn.jsdelivr.net/npm/jquery@3"></script>
+        <!--    <script src="/js/index"></script>-->
+    </body>
 </html>

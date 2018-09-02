@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html lang="zh">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
-<body>
-    <form>
-        <input type="text" id="txtSearch" name="search" placeholder="请输入搜索的内容" />
-        <input type="submit" id="btnSubmit" value="搜索" />
-    </form>
-    <table id="tbList">
-        <thead>
-            <tr>
-                <th>标题</th>
-                <th>状态</th>
-                <th>操作</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-    <script src="//cdn.jsdelivr.net/npm/jquery@3"></script>
-    <script src="/js/admin/posts"></script>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+        <meta name="viewport" content="width=device-width,maximum-scale=1.0,user-scalable=1">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <title>Feng Home</title>
+        <link rel="stylesheet" type="text/css" href="/css/admin/public" />
+        <link rel="stylesheet" type="text/css" href="/css/admin/posts" />
+    </head>
+    <body>
+        <?php require_once 'Header.html'; ?>
+        <form>
+            <input type="text" id="txtSearch" name="search" placeholder="请输入搜索的内容" />
+            <input type="submit" id="btnSubmit" value="搜索" />
+        </form>
+        <table id="tbList">
+            <thead>
+                <tr>
+                    <th>标题</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <script src="//cdn.jsdelivr.net/npm/jquery@3"></script>
+        <script src="/js/admin/posts"></script>
+    </body>
 </html>

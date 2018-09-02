@@ -2,6 +2,7 @@
 namespace iWriter\Controllers {
     use iWriter\Controllers\Resource;
     use iWriter\Models\Admin\PostModel;
+    use iWriter\Models\IndexModel;
     class IndexController extends Resource {
         public function getHtml() {
             $file = '../Views/Index.html';
@@ -12,7 +13,8 @@ namespace iWriter\Controllers {
             $this->_headers[] = 'Cache-Control: max-age=' . $expire;
 
             $this->_headers[] = 'Last-Modified: ' . gmdate("D, d M Y H:i:s", filemtime($file)) . ' GMT';
-            $this->_body = $this->render($file);
+            $model = new IndexModel($this->_request->_data);
+            $this->_body = $this->render($file, $model->getViews());
         }
         public function getJson() {
             $this->_headers[] = 'Content-Type: application/json';

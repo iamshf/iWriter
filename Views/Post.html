@@ -1,19 +1,25 @@
 <!DOCTYPE html>
 <html lang="zh">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="/css/public" />
-    <link rel="stylesheet" type="text/css" href="/css/post" />
-</head>
-<body>
-    <?php require_once 'Top.html'; ?>
-    <article>
-        <h4><?php echo $gmt_modify; ?></h4>
-        <h1><?php echo $title; ?></h1>
-        <h2><?php echo $subtitle; ?></h2>
-        <div><?php echo $foreword ?></div>
-        <div><?php echo $content; ?></div>
-    </article>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+        <meta name="viewport" content="width=device-width,maximum-scale=1.0,user-scalable=1">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <title>Feng Home</title>
+        <link rel="stylesheet" type="text/css" href="/css/public" />
+        <link rel="stylesheet" type="text/css" href="/css/post" />
+    </head>
+    <body>
+        <?php require_once 'Header.html'; ?>
+        <div id="main">
+            <article>
+                <h4><?php echo $gmt_modify; ?></h4>
+                <h1><?php echo $title; ?></h1>
+                <h2><?php echo $subtitle; ?></h2>
+                <div><?php echo $foreword ?></div>
+                <div><?php echo $content; ?></div>
+            </article>
+            <?php require_once 'Category.php'; ?>
+        </div>
+    </body>
 </html>

@@ -2,17 +2,22 @@
 <html lang="zh">
     <head>
         <meta charset="UTF-8">
-        <title></title>
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+        <meta name="viewport" content="width=device-width,maximum-scale=1.0,user-scalable=1">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <title>Feng Home</title>
+        <link rel="stylesheet" type="text/css" href="/css/admin/public" />
         <link rel="stylesheet" type="text/css" href="/css/admin/post" />
     </head>
     <body>
+        <?php require_once 'Header.html'; ?>
         <form>
             <fieldset>
                 <input type="hidden" name="id" value="<?php echo $id; ?>" />
                 <input type="text" id="title" name="title" placeholder="请输入标题" required="required" maxlength="100" value="<?php echo $title; ?>" /> 
                 <input type="text" id="subtitle" name="subtitle" placeholder="副标题" maxlength="100" value="<?php echo $title; ?>" /> 
                 <textarea id="foreword" name="foreword" placeholder="引言"><?php echo $title; ?></textarea>
-                <textarea id="content" name="content" placeholder="内容"><?php echo $title; ?></textarea>
+                <textarea id="content" name="content" placeholder="内容"><?php echo $content; ?></textarea>
                 <input type="hidden" id="hidStatus" name="status" value="<?php echo $status; ?>" />
 
                 <input type="submit" id="btnSubmit" value="保存" />

@@ -1,7 +1,7 @@
 <?php
 namespace iWriter\Controllers {
     use iWriter\Controllers\Resource;
-    use iWriter\Models\Admin\PostModel;
+    use iWriter\Models\PostModel;
     class PostController extends Resource {
         public function getHtml() {
             $file = '../Views/Post.html';
@@ -12,25 +12,10 @@ namespace iWriter\Controllers {
             $this->_headers[] = 'Cache-Control: max-age=' . $expire;
 
             $this->_headers[] = 'Last-Modified: ' . gmdate("D, d M Y H:i:s", filemtime($file)) . ' GMT';
-            $model = new PostModel(
-                array_merge(
-                    array('columns' => 'id,title,subtitle,foreword,gmt_modify,content', 'count' => 1), 
-                    $this->_request->_data
-                )
-            );
-            $views = $model->get();
+            $model = new PostModel($this->_request->_data);
+            $views = $model->getViews();
+            //var_dump($views);exit;
             $this->_body = $this->render($file, $views);
-        }
-        public function getJson() {
-            $this->_headers[] = 'Content-Type: application/json';
-            $model = new PostModel(array_merge(array('columns' => 'id,title,subtitle,foreword,gmt_modify'), $this->_request->_data));
-            $result = $model->get();
-            if($result !== false && !empty($result)) {
-                $this->_body = $this->getJsonResult(1, '成功', 200, $result);
-            }
-            else {
-                $this->_body = $this->getJsonResult(0, '请求非法', 404);
-            }
         }
     }
 }

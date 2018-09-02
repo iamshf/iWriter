@@ -182,7 +182,10 @@ namespace iWriter\Models\Admin {
             return array_key_exists('category_id', $this->_data) && is_numeric($this->_data['category_id']) && $this->_data['category_id'] > 0;
         }
         private function isIdExists() {
-            return MyPdo::init('r')->isExists('select 1 from post where id = :id', array(':id' => $this->_data['id'], 'dataType' => \PDO::PARAM_INT));
+            return MyPdo::init('r')->isExists(
+                'select 1 from post where id = :id', 
+                array(':id' => array('value' => $this->_data['id'], 'dataType' => \PDO::PARAM_INT))
+            );
         }
     }
 }

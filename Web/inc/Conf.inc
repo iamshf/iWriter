@@ -19,8 +19,8 @@
         const CONTROLLER_NAMESPACE = '\\iWriter\\Controllers\\';
         const CONTROLLER_SUFFIX = 'Controller';
 
-        //const FILE_PATH = '/home/shf/Documents/Work/Project/iWriter/';
-        const FILE_PATH = '/home/shf/mydata/documents/work/project/iWriter/';
+        const FILE_PATH = '/home/shf/Documents/Work/Project/iWriter/';
+        //const FILE_PATH = '/home/shf/mydata/documents/work/project/iWriter/';
 
         public function init(){
             $this->setError();
@@ -61,6 +61,10 @@
                 array(
                     'post' => array(
                         'url' => '/(?<controller>(admin/)?post)/(?<id>\d+)',
+                        'status' => true
+                    ),
+                    'index' => array(
+                        'url' => '/((?<controller>(index))/)?(?<category_id>\d+)',
                         'status' => true
                     ),
                     'media' => array(

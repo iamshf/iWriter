@@ -29,7 +29,7 @@ namespace iWriter\Controllers\Admin {
             $this->_headers[] = 'Content-Type: application/json';
             $model = new PostModel($this->_request->_data);
             if($model->verifyContent()) {
-                $result = $model->add();
+                $result = $model->save();
                 if($result > 0) {
                     $this->_body = $this->getJsonResult(1, '成功', 201, array('id' => $result));
                 }

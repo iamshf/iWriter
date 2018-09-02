@@ -25,8 +25,10 @@
         });
         $("#btnSubmit").on("click", function(){ 
             $("#hidStatus").val("1");
-            def_save.always(function(rep_data, textStatus, jqXHR){
+            def_save.done(function(rep_data, textStatus, jqXHR){
                 alert(rep_data["msg"]);
+            }).fail(function(jqXHR, textStauts, err){
+                alert(jqXHR.resonseJSON.msg);
             });
         });
         $("#btnPreview").on("click", function(){ 
@@ -35,12 +37,12 @@
             def_save.done(function(rep_data, textStatus, jqXHR){
                 window.open("/post/" + rep_data["data"]["id"]);
             }).fail(function(jqXHR, textStatus, err){
-                alert(jqXHR.responseText);
+                alert(jqXHR.responseJSON.msg);
             });
         });
     }
 
     function save() {
-        return $.ajax({"url": "./posts", "method": "post", "dataType": "json", "data": $("form").serialize()});
+        return $.ajax({"url": "/admin/posts", "method": "post", "dataType": "json", "data": $("form").serialize()});
     }
 }(jQuery, window));

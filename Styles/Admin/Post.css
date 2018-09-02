@@ -9,10 +9,10 @@ body {
 }
 form{
     margin:0 auto;
-    width:80%;
     max-width:51.2rem;
     display:flex;
     flex-flow:row wrap;
+    flex:1 1 auto;
 }
 form fieldset{
     border:none;

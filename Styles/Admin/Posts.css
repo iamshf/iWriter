@@ -1,0 +1,13 @@
+#tbList{
+    margin:0 auto;
+    width:80%;
+    max-width:51.2rem;
+    background:rgb(255, 255, 255);
+}
+#tbList th, #tbList td {
+    padding:0.5rem 0;
+    border-bottom:0.1rem solid rgb(240, 240, 236);
+}
+#tbList td {
+    border-bottom-width:0.05rem;
+}
