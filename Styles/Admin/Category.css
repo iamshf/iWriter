@@ -6,3 +6,6 @@
     margin:1rem;
     list-style:none;
 }
+#btnDel{
+    display:none;
+}

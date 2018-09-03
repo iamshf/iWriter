@@ -12,7 +12,8 @@
                 $("#btnSubmit").val("修改");
             }
             else {
-                $("#position_value,#position_name").removeAttr("disabled");
+                resetForm();
+                $("#btnSubmit").val("添加");
             }
         });
         $("#position_value, #position_name").on("change", function(){
@@ -20,15 +21,32 @@
         });
 
         $("form").on("submit", function(){
-            alert($(this).serialize());
+            var def_save = $("#btnSubmit").val() == "添加" ? post() : put();;
+            def_save.always(function(){
+                initData();
+                resetForm();
+            });
             return false;
+        });
+        $("#btnDel").on("click", function(){
+            del().done(function(){
+                initData();
+                resetForm();
+            });
         });
     }
     function initData() {
+        $("#categories").empty();
+        $("#position_value option:gt(0)").remove();
         get().done(function(data, textStatus, jqXHR) {
             bindCategories(data["data"]);
             bindPosition(data["data"]);
         });
+    }
+    function resetForm(){
+        $("form")[0].reset();
+        $("#btnSubmit").val("添加");
+        $("#btnDel").hide();
     }
     function bindCategories(data) {
         for(var i = 0, l = data.length; i < l; i++){
@@ -56,10 +74,24 @@
         $("#category_name").val(data["name"]);
         $("#category_remark").val(data["remark"]);
         $("#position").val("").removeAttr("name");
-        data["rv"] - data["lv"] > 1 ? $("#position_value,#position_name").attr("disabled", "disabled") : $("#position_value,#position_name").removeAttr("disabled");
+        if(data["enabled"] == 1) {
+            $("#btnDel").show();
+        }
+        else {
+            $("#btnDel").hide();
+        }
     }
 
     function get(data) {
-        return $.ajax({"url": "", "dataType": "json", "method": "get", "data": {"enabled": -1, "deep": "*"}});
+        return $.ajax({"url": "", "dataType": "json", "method": "get", "data": {"columns": "id,name,pid,remark,lv, deep,rv,enabled", "enabled": -1, "deep": "*"}});
+    }
+    function post(){
+        return $.ajax({"url": "", "dataType": "json", "method": "post", "data": $("form").serialize() });
+    }
+    function put(){
+        return $.ajax({"url": "", "dataType": "json", "method": "put", "data": $("form").serialize() });
+    }
+    function del() {
+        return $.ajax({"url": "", "dataType": "json", "method": "delete", "data": {"id": $("#category_id").val()} });
     }
 }(jQuery, window));

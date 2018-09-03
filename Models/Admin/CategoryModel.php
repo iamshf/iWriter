@@ -164,6 +164,9 @@ namespace iWriter\Models\Admin {
                 $sql = 'update category set ' . implode(',', $values) . ' where id = :id';
                 $result = $this->_myPdo->exec($sql, $params);
             }
+            if($this->verifyPID() || $this->verifyAfterId() || $this->verifyBeforeId()) {
+                $this->restore();
+            }
             return $result == 0 || $result == 1;
         }
         public function delete() {
