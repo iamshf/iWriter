@@ -21,15 +21,16 @@
         $("form").on("submit", function() {
             editor.sync();
             def_save = save();
+            def_save.done(function(data, textStatus, jqXHR){
+                alert(data["msg"]);
+                $("#id").val(data["data"]["id"]);
+            }).fail(function(jqXHR, textStauts, err){
+                alert(jqXHR.resonseJSON.msg);
+            });
             return false;
         });
         $("#btnSubmit").on("click", function(){ 
             $("#hidStatus").val("1");
-            def_save.done(function(rep_data, textStatus, jqXHR){
-                alert(rep_data["msg"]);
-            }).fail(function(jqXHR, textStauts, err){
-                alert(jqXHR.resonseJSON.msg);
-            });
         });
         $("#btnPreview").on("click", function(){ 
             $("#hidStatus").val("2");

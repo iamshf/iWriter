@@ -2,6 +2,7 @@
 namespace iWriter\Controllers\Admin {
     use iWriter\Controllers\Admin\Resource;
     use iWriter\Models\Admin\PostModel;
+    use iWriter\Models\Admin\PostsModel;
     class PostsController extends Resource {
         public function getHtml() {
             $file = '../Views/Admin/Posts.html';
@@ -12,7 +13,8 @@ namespace iWriter\Controllers\Admin {
             $this->_headers[] = 'Cache-Control: max-age=' . $expire;
 
             $this->_headers[] = 'Last-Modified: ' . gmdate("D, d M Y H:i:s", filemtime($file)) . ' GMT';
-            $this->_body = $this->render($file);
+            $model = new PostsModel($this->_request->_data);
+            $this->_body = $this->render($file, $model->getViews());
         }
         public function getJson() {
             $this->_headers[] = 'Content-Type: application/json';

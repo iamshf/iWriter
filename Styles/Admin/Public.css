@@ -21,3 +21,8 @@ header nav a{
     color:rgb(187, 187, 187);
     text-decoration:none;
 }
+
+#main{
+    margin:0 auto;
+    max-width:51.2rem;
+}

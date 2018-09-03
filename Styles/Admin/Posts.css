@@ -1,8 +1,22 @@
 #tbList{
     margin:0 auto;
-    width:80%;
+    width:100%;
     max-width:51.2rem;
     background:rgb(255, 255, 255);
+}
+#tbList tbody{
+    display:block;
+    height:auto;
+    max-height:calc(100vh - 10rem);
+    overflow-y:auto;
+}
+#tbList thead,#tbList tr{
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}
+#tbList thead{
+    width:calc(100% - 1rem);
 }
 #tbList th, #tbList td {
     padding:0.5rem 0;
@@ -10,4 +24,8 @@
 }
 #tbList td {
     border-bottom-width:0.05rem;
+}
+#tbList a {
+    color:rgb(70, 123, 150);
+    text-decoration:none;
 }

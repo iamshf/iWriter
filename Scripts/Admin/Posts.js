@@ -1,16 +1,18 @@
 ;(function($, window){
     $(function(){
+        initEvent();
         initData();
     });
 
     function initEvent(){
-        $("form").on("submit", function(){
+        $("form").on("submit", function() {
             initData();
             return false;
         });
     }
     function initData(){
-        get().done(function(rep_data, textStatus, jqXHR){
+        get().done(function(rep_data, textStatus, jqXHR) {
+            $("#tbList tbody").empty();
             bindData(rep_data["data"]);
         });
     }
@@ -27,7 +29,7 @@
     }
     function get(){
         return $.ajax({
-            "url": "./posts", "dataType": "json", "method": "get", "data": {"columns": "id,title,status"}
+            "url": "./posts", "dataType": "json", "method": "get", "data": $("form").serialize()
         });
     }
 }(jQuery, window));

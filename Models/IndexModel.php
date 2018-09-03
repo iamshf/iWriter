@@ -8,19 +8,20 @@ namespace iWriter\Models {
         }
 
         public function getViews(){
-            $views = array('posts' => array());
             $posts = $this->get();
             $categories = $this->getCategories();
-            return array(
+            return array (
                 'posts' => ($posts !== false && !empty($posts) ? $posts : array()),
-                'categories' => ($categories !== false && !empty($categories) ? $categories : array())
+                'categories' => ($categories !== false && !empty($categories) ? $categories : array()),
+                'count' => 20//首次加载数量
             );
         }
         public function get() {
             $model = new \iWriter\Models\Admin\PostModel(
                 array_merge(
                     array(
-                        'columns' => 'id,title,subtitle,foreword,content,gmt_modify'
+                        'columns' => 'id,title,subtitle,foreword,content,gmt_modify',
+                        'count' => 20
                     ),
                     $this->_data
                 )

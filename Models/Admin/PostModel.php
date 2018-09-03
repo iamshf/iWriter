@@ -17,6 +17,7 @@ namespace iWriter\Models\Admin {
         }
         public function getViews(){
             $views = array(
+                'id' => -1,
                 'title' => '', 
                 'subtitle' => '', 
                 'foreword' => '', 
@@ -68,6 +69,10 @@ namespace iWriter\Models\Admin {
             if($this->verifyCategoryId()) {
                 $sqlWhere[] = 'id in (select post_id from rel_category_post where category_id = :category_id)';
                 $params[':category_id'] = array('value' => $this->_data['category_id'], 'dataType' => \PDO::PARAM_INT);
+            }
+            if($this->verifyStartLtTime()) {
+                $sqlWhere[] = 'gmt_modify < :start_lt_time';
+                $params[':start_lt_time'] = array('value' => $this->_data['start_lt_time'], 'dataType' => \PDO::PARAM_STR);
             }
             if(count($sqlWhere) > 0) {
                 $sql .= ' where ' . implode(' and ', $sqlWhere);
@@ -180,6 +185,9 @@ namespace iWriter\Models\Admin {
         }
         private function verifyCategoryId(){
             return array_key_exists('category_id', $this->_data) && is_numeric($this->_data['category_id']) && $this->_data['category_id'] > 0;
+        }
+        private function verifyStartLtTime() {
+            return array_key_exists('start_lt_time', $this->_data) && Validate::date($this->_data['start_lt_time']);
         }
         private function isIdExists() {
             return MyPdo::init('r')->isExists(
