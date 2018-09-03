@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html lang="zh">
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="/css/admin/category" />
-</head>
-<body>
-    <div id=""></div>
-    <form>
-        <input type="number" id="category_id" name="id" min="1" readonly="readonly" placeholder="请选择要操作的节点" required="required" />
-        <input type="number" id="category_pid" name="pid" min="0" readonly="readonly" placeholder="请选择要操作的节点" value="0" required="required" />
-        <input type="text" id="category_name" name="name" placeholder="请输入分类名称" maxlength="10" required="required" />
-        <textarea id="category_remark" name="remark" placeholder="请输入备注"></textarea>
-    </form>
-    <script src="//cdn.jsdelivr.net/npm/jquery@3"></script>
-    <script src="/js/admin/category"></script>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+        <meta name="viewport" content="width=device-width,maximum-scale=1.0,user-scalable=1">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <title>Feng Home</title>
+        <link rel="stylesheet" type="text/css" href="/css/admin/public" />
+        <link rel="stylesheet" type="text/css" href="/css/admin/category" />
+    </head>
+    <body>
+        <?php require_once 'Header.html'; ?>
+        <div id="main">
+            <ul id="categories"></ul>
+            <form>
+                <p><input type="number" id="category_id" name="id" min="1" readonly="readonly" placeholder="请选择要操作的节点" required="required" /></p>
+                <p><input type="text" id="category_name" name="name" placeholder="请输入分类名称" maxlength="10" required="required" /></p>
+                <p><textarea id="category_remark" name="remark" placeholder="请输入备注"></textarea></p>
+                <p><label for="position_value">保存在</label><select id="position_value"><option>分类</option></select><select id="position_name"><option value="after_id">之前</option><option value="before_id">之后</option><option value="pid">底下</option></select></p>
+                <p>
+                    <input type="hidden" id="position" name="pid" value="0" />
+                    <input type="submit" id="btnSubmit" value="添加" />
+                </p>
+            </form>
+        </div>
+        <script src="//cdn.jsdelivr.net/npm/jquery@3"></script>
+        <script src="/js/admin/category"></script>
+    </body>
 </html>
