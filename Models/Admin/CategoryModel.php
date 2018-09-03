@@ -188,7 +188,7 @@ namespace iWriter\Models\Admin {
                     )
                 );
                 $result = $this->_myPdo->exec(
-                    'update category set enabled = :disabled, lv = 0, rv = 0 where lv between :lv and :rv and enabled = :enabled',
+                    'update category set enabled = :disabled, lv = 0, rv = 0, deep = 0 where lv between :lv and :rv and enabled = :enabled',
                     array(
                         ':disabled' => array('value' => '0', 'dataType' => \PDO::PARAM_STR),
                         ':lv' => array('value' => $row['lv'], 'dataType' => \PDO::PARAM_INT),

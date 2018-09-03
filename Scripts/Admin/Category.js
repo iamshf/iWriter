@@ -55,17 +55,24 @@
                 $("#categories li:last").append("&nbsp;&nbsp;&nbsp;&nbsp;");
             }
             $("#categories li:last").append("<input type=\"checkbox\" value=\"" + data[i]["id"] + "\" id=\"category_" + data[i]["id"] + "\" />");
-            $("#categories li:last").append("<label for=\"category_" + data[i]["id"] + "\">" + data[i]["name"] + "</label>");
+            if(data[i]["enabled"] == 1) {
+                $("#categories li:last").append("<label for=\"category_" + data[i]["id"] + "\">" + data[i]["name"] + "</label>");
+            }
+            else {
+                $("#categories li:last").append("<label for=\"category_" + data[i]["id"] + "\"><del>" + data[i]["name"] + "</del></label>");
+            }
             $("#categories li:last").data("category", data[i]);
         }
     }
     function bindPosition(data) {
         for(var i = 0, l = data.length; i < l; i++){
-            $("#position_value").append("<option value=\"" + data[i]["id"] + "\"></option>");
-            for(var j = 1; j < data[i]["deep"]; j++) {
-                $("#position_value option:last").append("&nbsp;&nbsp;&nbsp;&nbsp;");
+            if(data[i]["enabled"] == 1) {
+                $("#position_value").append("<option value=\"" + data[i]["id"] + "\"></option>");
+                for(var j = 1; j < data[i]["deep"]; j++) {
+                    $("#position_value option:last").append("&nbsp;&nbsp;&nbsp;&nbsp;");
+                }
+                $("#position_value option:last").append(data[i]["name"]);
             }
-            $("#position_value option:last").append(data[i]["name"]);
         }
     }
 

@@ -6,6 +6,9 @@
     margin:1rem;
     list-style:none;
 }
+del{
+    color:rgb(255, 0, 0);
+}
 #btnDel{
     display:none;
 }

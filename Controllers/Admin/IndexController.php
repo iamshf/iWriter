@@ -22,7 +22,7 @@ namespace iWriter\Controllers\Admin {
                 $result = $model->get();
                 if($result !== false && !empty($result) && $model->comparePwd($this->_request->_data['pwd'], $result['pwd'])) {
                     $_SESSION['uid'] = $result['id'];
-                    $this->_body = $this->getJsonResult(1, '成功', 200, array('location' => './default'));
+                    $this->_body = $this->getJsonResult(1, '成功', 200, array('location' => './posts'));
                 }
                 else {
                     $this->_body = $this->getJsonResult(2, '帐号或密码不正确', 404);
