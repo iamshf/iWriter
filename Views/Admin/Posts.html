@@ -26,6 +26,13 @@
                         }
                     ?>
                 </select>
+                <label for="post_status">状态：</label>
+                <select id="post_status" name="status">
+                    <option value="-1">全部</option>
+                    <option value="0">删除</option>
+                    <option value="1">正常</option>
+                    <option value="2">草稿</option>
+                </select>
                 <input type="text" id="txtSearch" name="search" placeholder="请输入搜索的内容" />
                 <input type="hidden" id="hidCount" name="count" value="5" />
                 <input type="hidden" id="hidStartLtTime" name="start_lt_time" />

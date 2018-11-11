@@ -70,6 +70,12 @@ namespace iWriter\Models\Admin {
                 $sqlWhere[] = 'id in (select post_id from rel_category_post where category_id = :category_id)';
                 $params[':category_id'] = array('value' => $this->_data['category_id'], 'dataType' => \PDO::PARAM_INT);
             }
+            $status = $this->verifyStatus() ? $this->_data['status'] : 1;
+            if($status > -1) {
+                $sqlWhere[] = 'status = :status';
+                $params[':status'] = array('value' => $status, 'dataType' => \PDO::PARAM_INT);
+            }
+
             if($this->verifyStartLtTime()) {
                 $sqlWhere[] = 'gmt_modify < :start_lt_time';
                 $params[':start_lt_time'] = array('value' => $this->_data['start_lt_time'], 'dataType' => \PDO::PARAM_STR);
@@ -179,7 +185,7 @@ namespace iWriter\Models\Admin {
             return array_key_exists('columns', $this->_data) && Validate::sqlParam($this->_data['columns']);
         }
         private function verifyStatus(){
-            return array_key_exists('status', $this->_data) && in_array($this->_data['status'], array(0, 1, 2));
+            return array_key_exists('status', $this->_data) && in_array($this->_data['status'], array(-1, 0, 1, 2));
         }
         private function verifyCount(){
             return array_key_exists('count', $this->_data) && is_numeric($this->_data['count']);
