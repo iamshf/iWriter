@@ -74,6 +74,10 @@ namespace iWriter\Models\Admin {
                 $sqlWhere[] = 'gmt_modify < :start_lt_time';
                 $params[':start_lt_time'] = array('value' => $this->_data['start_lt_time'], 'dataType' => \PDO::PARAM_STR);
             }
+            if($this->verifyStatus()) {
+                $sqlWhere[] = 'status = :status';
+                $params[':status'] = array('value' => $this->_data['status'], 'dataType' => \PDO::PARAM_STR);
+            }
             if(count($sqlWhere) > 0) {
                 $sql .= ' where ' . implode(' and ', $sqlWhere);
             }

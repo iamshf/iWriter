@@ -16,30 +16,32 @@
             });
         });
     }
-    function initEvent(){
-        var def_save;
-        $("form").on("submit", function() {
+    function initEvent() {
+        $("form").on("submit", function(e) {
+            e.preventDefault();
             editor.sync();
-            def_save = save();
-            def_save.done(function(data, textStatus, jqXHR){
+            save().done(function(data, textStatus, jqXHR){
                 alert(data["msg"]);
-                $("#id").val(data["data"]["id"]);
+                jqXHR.status == 201 && $("#id").val(data["data"]["id"]);
             }).fail(function(jqXHR, textStauts, err){
-                alert(jqXHR.resonseJSON.msg);
+                alert(jqXHR.responseJSON.msg);
             });
-            return false;
         });
         $("#btnSubmit").on("click", function(){ 
             $("#hidStatus").val("1");
         });
-        $("#btnPreview").on("click", function(){ 
-            $("#hidStatus").val("2");
-            $("form").submit();
-            def_save.done(function(rep_data, textStatus, jqXHR){
-                window.open("/post/" + rep_data["data"]["id"]);
-            }).fail(function(jqXHR, textStatus, err){
-                alert(jqXHR.responseJSON.msg);
-            });
+        $("#btnPreview,#btnSave").on("click", function(){ 
+            var _this = $(this);
+            if($("form")[0].reportValidity()) {
+                $("#hidStatus").val("2");
+                editor.sync();
+                save().done(function(data, textStatus, jqXHR){
+                    jqXHR.status == 201 && $("#id").val(data["data"]["id"]);
+                    _this.attr("id") == "btnPreview" && window.open("/post/" + data["data"]["id"]);
+                }).fail(function(jqXHR, textStatus, err){
+                    alert(jqXHR.responseJSON.msg);
+                });
+            }
         });
     }
 

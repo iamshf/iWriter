@@ -14,7 +14,6 @@ namespace iWriter\Controllers {
             $this->_headers[] = 'Last-Modified: ' . gmdate("D, d M Y H:i:s", filemtime($file)) . ' GMT';
             $model = new PostModel($this->_request->_data);
             $views = $model->getViews();
-            //var_dump($views);exit;
             $this->_body = $this->render($file, $views);
         }
     }

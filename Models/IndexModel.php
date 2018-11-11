@@ -21,7 +21,8 @@ namespace iWriter\Models {
                 array_merge(
                     array(
                         'columns' => 'id,title,subtitle,foreword,content,gmt_modify',
-                        'count' => 20
+                        'count' => 20,
+                        'status' => 1
                     ),
                     $this->_data
                 )

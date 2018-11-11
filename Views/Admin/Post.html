@@ -13,14 +13,15 @@
         <?php require_once 'Header.html'; ?>
         <form>
             <fieldset>
-                <input type="hidden" name="id" value="<?php echo $id; ?>" />
+                <input type="hidden" id="id" name="id" value="<?php echo $id; ?>" />
                 <input type="text" id="title" name="title" placeholder="请输入标题" required="required" maxlength="100" value="<?php echo $title; ?>" /> 
                 <input type="text" id="subtitle" name="subtitle" placeholder="副标题" maxlength="100" value="<?php echo $title; ?>" /> 
                 <textarea id="foreword" name="foreword" placeholder="引言"><?php echo $title; ?></textarea>
                 <textarea id="content" name="content" placeholder="内容"><?php echo $content; ?></textarea>
                 <input type="hidden" id="hidStatus" name="status" value="<?php echo $status; ?>" />
 
-                <input type="submit" id="btnSubmit" value="保存" />
+                <input type="submit" id="btnSubmit" value="发布" />
+                <input type="button" id="btnSave" value="存草稿" />
                 <input type="button" id="btnPreview" value="预览" />
             </fieldset>
             <fieldset>

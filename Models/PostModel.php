@@ -4,7 +4,7 @@ namespace iWriter\Models {
     class PostModel {
         private $_data;
         public function __construct($data = array()) {
-            $this->_data = array();
+            $this->_data = $data;
         }
 
         public function getViews(){
