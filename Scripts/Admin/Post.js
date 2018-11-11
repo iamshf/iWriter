@@ -9,10 +9,10 @@
         KindEditor.ready(function(K) {
             editor = K.create("#content", {
                 "width": "100%",
-                "uploadJson": "./upload",
+                "uploadJson": "/admin/upload",
                 "filePostName": "file_info",
                 "allowFileManager": true,
-                "fileManagerJson": "./uploadFiles"
+                "fileManagerJson": "/admin/uploadFiles"
             });
         });
     }

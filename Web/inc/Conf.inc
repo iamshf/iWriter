@@ -63,20 +63,16 @@
                         'url' => '/(?<controller>(admin/)?post)/(?<id>\d+)',
                         'status' => true
                     ),
-                    'index' => array(
-                        'url' => '/((?<controller>(index))/)?(?<category_id>\d+)',
-                        'status' => true
-                    ),
-                    'media' => array(
-                        'url' => '(/(?<module_name>[a-zA-Z0-9]+))?/(?<controller>media)/(?<path>[\w/\.]*(?<filename>[\w-]+)\.(?<extension>(jpg|gif|png|svg|mp3|mp4)))\w?',
-                        'status' => true
-                    ),
                     'css' => array(
                         'url' => '/(?<controller>(css|js))/(?<name>[a-zA-Z0-9/.]+)',
                         'status' => true
                     ),
                     'image' => array(
-                        'url' => '/(?<controller>image|upload)/(?<path>[\w/\.]+\.(?<extension>(jpg|gif|png|svg)))\w?',
+                        'url' => '/(?<controller>image|upload)/(?<path>[\w/\.]+\.(?<extension>(jpg|gif|png|svg|mp3|mp4)))\w?',
+                        'status' => true
+                    ),
+                    'index' => array(
+                        'url' => '/((?<controller>(index))/)?(?<category_id>\d+)',
                         'status' => true
                     ),
                     'rootDire' => array(
