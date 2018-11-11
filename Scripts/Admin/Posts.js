@@ -24,7 +24,7 @@
 
             $("#tbList tr:last").append("<td>" + data[i]["title"] + "</td>");
             $("#tbList tr:last").append("<td>" + (data[i]["status"] == 0 ? "禁用" : (data[i]["status"] == 1 ? "正常" : "草稿")) + "</td>");
-            $("#tbList tr:last").append("<td><a href=\"./post/" + data[i]["id"] + "\">编辑</a></td>");
+            $("#tbList tr:last").append("<td><a href=\"./post/" + data[i]["id"] + "/" + data[i]["status"] + "\">编辑</a></td>");
         }
     }
     function get(){

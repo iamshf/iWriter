@@ -37,7 +37,8 @@
                 editor.sync();
                 save().done(function(data, textStatus, jqXHR){
                     jqXHR.status == 201 && $("#id").val(data["data"]["id"]);
-                    _this.attr("id") == "btnPreview" && window.open("/post/" + data["data"]["id"]);
+                    alert(data["msg"]);
+                    _this.attr("id") == "btnPreview" && window.open("/post/" + data["data"]["id"] + "/-1");
                 }).fail(function(jqXHR, textStatus, err){
                     alert(jqXHR.responseJSON.msg);
                 });

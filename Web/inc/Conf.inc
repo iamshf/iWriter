@@ -60,7 +60,7 @@
             $route->addRoutes(
                 array(
                     'post' => array(
-                        'url' => '/(?<controller>(admin/)?post)/(?<id>\d+)',
+                        'url' => '/(?<controller>(admin/)?post)/(?<id>\d+)(/(?<status>(-1|0|1|2)))?',
                         'status' => true
                     ),
                     'css' => array(
