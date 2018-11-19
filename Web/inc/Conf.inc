@@ -21,6 +21,10 @@
 
         const FILE_PATH = '/home/shf/Documents/Work/Project/iWriter/';
         //const FILE_PATH = '/home/shf/mydata/documents/work/project/iWriter/';
+        const SITE_NAME = '';
+        const SITE_VERSION = '';
+        const SITE_AUTHOR = '';
+        const SITE_INFO = '';
 
         public function init(){
             $this->setError();
