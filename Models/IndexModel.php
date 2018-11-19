@@ -20,7 +20,7 @@ namespace iWriter\Models {
             $model = new \iWriter\Models\Admin\PostModel(
                 array_merge(
                     array(
-                        'columns' => 'id,title,subtitle,foreword,content,gmt_modify',
+                        'columns' => 'id,title,subtitle,foreword,content,gmt_add,gmt_modify',
                         'count' => 20,
                         'status' => 1
                     ),
