@@ -24,7 +24,7 @@ namespace iWriter\Models {
         private function getPost(){
             $model = new \iWriter\Models\Admin\PostModel(
                 array_merge(
-                    array('columns' => 'id,title,subtitle,foreword,gmt_modify,content', 'count' => 1), 
+                    array('columns' => 'id,title,subtitle,foreword,gmt_add,gmt_modify,content', 'count' => 1), 
                     $this->_data
                 )
             );

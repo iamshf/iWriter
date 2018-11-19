@@ -66,9 +66,9 @@ article h1 a{
 article h1 a:hover{
     color:rgb(68, 68, 68);
 }
-article h4{
+article h4 time{
     margin:0;
-    color:rgb(153,153,153);
+    color:rgb(128,128,128);
 }
 #categories{
     margin-left:1.5rem;
