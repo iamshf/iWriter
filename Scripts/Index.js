@@ -36,7 +36,7 @@
     function bindPosts(data, length) {
         for(var i = 0; i < length; i++) {
             $("#articles").append("<article></article>");
-            $("#articles article").last().append("<h4>" + data[i]["gmt_modify"] + "</h4>");
+            $("#articles article").last().append("<h4><time pubdate=" + data[i]["gmt_modify"] + ">" + data[i]["gmt_modify"] + "</time></h4>");
             $("#articles article").last().append("<h1><a href=\"post/" + data[i]["id"] + "\">" + data[i]["title"] + "</a></h4>");
             $("#articles article").last().append($.trim(data[i]["subtitle"]) != "" ? "<div>" + data[i]["subtitle"] + "</div>" : "");
             $("#articles article").last().append($.trim(data[i]["foreword"]) != "" ? "<div>" + data[i]["foreword"] + "</div>" : "");
