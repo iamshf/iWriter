@@ -18,7 +18,7 @@
                     foreach($posts as $post) {
                         if($i == $count) {break;}
                         echo '<article>';
-                            echo '<h4>', $post['gmt_modify'], '</h4>';
+                            echo '<h4><time pubdate="', $post['gmt_add'], '">', $post['gmt_modify'], '</time></h4>';
                             if(!empty($post['title'])) {echo '<h1><a href="/post/', $post['id'], '">', $post['title'], '</a></h1>';}
                             if(!empty($post['subtitle'])) {echo '<h2>', $post['subtitle'], '</h2>';}
                             if(!empty($post['foreword'])) { echo '<div>', $post['foreword'], '</div>';}

@@ -18,7 +18,7 @@ namespace iWriter\Controllers {
         }
         public function getJson() {
             $this->_headers[] = 'Content-Type: application/json';
-            $model = new PostModel(array_merge(array('columns' => 'id,title,subtitle,foreword,gmt_modify'), $this->_request->_data));
+            $model = new PostModel(array_merge(array('columns' => 'id,title,subtitle,foreword,gmt_add,gmt_modify'), $this->_request->_data));
             $result = $model->get();
             if($result !== false && !empty($result)) {
                 $this->_body = $this->getJsonResult(1, '成功', 200, $result);
