@@ -22,6 +22,9 @@ namespace iWriter\Controllers {
             $this->_headers[] = 'X-Accel-Redirect: ' . mb_substr($file, 2, null, 'UTF-8');
         }
         private function getPath($name){
+            if(mb_strpos($name, 'jQueryPlugin', 0, 'UTF-8') !== false) {
+                return $name;
+            }
             $arr = explode('/', $name);
             return implode('/', 
                 array_map(function($str){

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>录音功能Demo</title>
+</head>
+<body>
+    <input type="button" value="开始录音" id="btnStartRecord" />
+    <input type="button" value="播放录音" id="btnPlayRecord" />
+    <input type="button" value="在audio中播放录音" id="btnPlayRecordWithAudio" />
+    <audio id="au" controls="controls"></audio>
+
+
+    <script src="//cdn.jsdelivr.net/npm/jquery@3"></script>
+    <script src="/js/jQueryPlugin/recorder/recorder.Web/recorderBySHF"></script>
+    <script>
+        ;(function($){
+            $(function(){
+                recorderBySHF.ready(function(instance){
+                    var recorder = instance.create({});
+                    $("#btnStartRecord").on("click", function(){
+                        if($(this).val() == "开始录音") {
+                            $(this).val("停止录音");
+                            recorder.start();
+                        }
+                        else {
+                            $(this).val("开始录音");
+                            recorder.stop();
+                        }
+                    });
+                    $("#btnPlayRecord").on("click", function(){
+                        $("#btnStartRecord").val() == "停止录音" && $("#btnStartRecord").click();
+                        recorder.play();
+                    });
+                    $("#btnPlayRecordWithAudio").on("click", function(){
+                        $("#btnStartRecord").val() == "停止录音" && $("#btnStartRecord").click();
+                        var wav = recorder.get("wav");
+                        $("#au")[0].setAttribute("src", URL.createObjectURL(new Blob([wav], { "type": "audio/wav" })));
+                    });
+                });
+            });
+        }(jQuery));
+    </script>
+</body>
+</html>
