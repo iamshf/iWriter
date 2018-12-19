@@ -8,12 +8,20 @@
     <meta name="author" content="<?php echo \Conf::SITE_AUTHOR ?>">
     <meta name="description" content="<?php echo \Conf::SITE_INFO ?>">
     <title>浏览器H5录音功能Demo <?php echo \Conf::SITE_NAME; ?></title>
+    <link rel="stylesheet" type="text/css" href="/css/public" />
 </head>
 <body>
-    <input type="button" value="开始录音" id="btnStartRecord" />
-    <input type="button" value="播放录音" id="btnPlayRecord" />
-    <input type="button" value="在audio中播放录音" id="btnPlayRecordWithAudio" />
-    <audio id="au" controls="controls"></audio>
+    <?php require_once 'Header.html'; ?>
+    <div id="main">
+	<div>
+	    <input type="button" value="开始录音" id="btnStartRecord" />
+	    <input type="button" value="播放录音" id="btnPlayRecord" />
+	    <input type="button" value="在audio中播放录音" id="btnPlayRecordWithAudio" />
+    	    <audio id="au" controls="controls"></audio>
+        </div>
+        <?php require_once 'Category.php'; ?>
+    </div>
+    <?php require_once 'Footer.html'; ?>
 
 
     <script src="//cdn.jsdelivr.net/npm/jquery@3"></script>

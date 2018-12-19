@@ -1,11 +1,5 @@
-#main {
-    margin:0 auto;
-    max-width:51.2rem;
-    display:flex;
-    flex-flow:row nowrap;
-}
 #articles {
-    margin-right:1.5rem;
+    margin: 0rem 0.5rem;
     flex:1 1 auto;
 }
 

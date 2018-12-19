@@ -44,6 +44,7 @@ header nav a{
 }
 #main {
     margin:0 auto;
+    width:100%;
     max-width:51.2rem;
     display:flex;
     flex-flow:row nowrap;
@@ -73,7 +74,7 @@ article h4{
     font-weight: normal;
 }
 #categories{
-    margin-left:1.5rem;
+    margin-left:0.5rem;
     padding:1rem;
     width:auto;
     list-style:none;
