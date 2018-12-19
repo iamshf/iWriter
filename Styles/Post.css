@@ -10,6 +10,7 @@ article pre{
     width:92%; 
     line-height:180%;
     overflow:auto; 
+    overflow-y:hidden; 
     background: rgba(29, 31, 33, 0.8);
     border:0.05rem solid rgb(119, 119, 119);
     color:rgb(255,255,255);
