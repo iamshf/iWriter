@@ -1,8 +1,6 @@
 article{
     margin:0 auto;
-    width:51.2rem;
-    text-indent:1.4rem;
-    line-height:180%;
+    flex:0 1 auto;
 }
 article pre{
     margin:1rem 4%; 

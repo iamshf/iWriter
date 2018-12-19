@@ -52,8 +52,10 @@ header nav a{
     flex:1 1 auto;
 }
 article {
+    text-indent:1.4rem;
     padding:0.75rem 0 1rem 0;
     border-bottom:1px solid rgb(238, 238, 238);
+    line-height:180%;
 }
 article h1 {
     margin:0 0 0.8rem 0;
