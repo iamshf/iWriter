@@ -49,10 +49,8 @@ header nav a{
     display:flex;
     flex-flow:row nowrap;
 }
-#articles {
-    flex:1 1 auto;
-}
 article {
+    margin:0 0.5rem;
     text-indent:1.4rem;
     padding:0.75rem 0 1rem 0;
     border-bottom:1px solid rgb(238, 238, 238);
@@ -74,9 +72,9 @@ article h4{
     font-weight: normal;
 }
 #categories{
-    margin-left:0.5rem;
-    padding:1rem;
+    margin:0 0.5rem;
     width:auto;
+    max-width:20%;
     list-style:none;
     display:flex;
     flex-flow:column nowrap;
