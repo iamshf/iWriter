@@ -5,7 +5,7 @@ namespace iWriter\Models {
         private $_data;
         public function __construct($data = array()) {
             $this->_data = $data;
-            !$this->verifyCount() && $this->_data['count'] = 2;
+            !$this->verifyCount() && $this->_data['count'] = 20;
         }
 
         public function getViews(){
