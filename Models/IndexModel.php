@@ -5,6 +5,7 @@ namespace iWriter\Models {
         private $_data;
         public function __construct($data = array()) {
             $this->_data = $data;
+            !$this->verifyCount() && $this->_data['count'] = 2;
         }
 
         public function getViews(){
@@ -13,23 +14,25 @@ namespace iWriter\Models {
             return array (
                 'posts' => ($posts !== false && !empty($posts) ? $posts : array()),
                 'categories' => ($categories !== false && !empty($categories) ? $categories : array()),
-                'count' => 20//首次加载数量
+                'count' => $this->_data['count'],//首次加载数量
+                'start_lt_time' => count($posts) > $this->_data['count'] ? $posts[(int)$this->_data['count'] - 1]['gmt_modify'] : ''
             );
         }
         public function get() {
-            $model = new \iWriter\Models\Admin\PostModel(
-                array_merge(
-                    array(
-                        'columns' => 'id,title,subtitle,foreword,content,gmt_add,gmt_modify',
-                        'count' => 20,
-                        'status' => 1
-                    ),
-                    $this->_data
-                )
+            $params = array_merge(array(
+                    'columns' => 'id,title,subtitle,foreword,content,gmt_add,gmt_modify',
+                    'status' => 1
+                ),
+                $this->_data
             );
+            $params['count']++;
+            $model = new \iWriter\Models\Admin\PostModel($params);
             return $model->get();
         }
 
+        private function verifyCount(){
+            return array_key_exists('count', $this->_data) && is_numeric($this->_data['count']);
+        }
         private function getCategories(){
             $model = new CategoryModel(array('deep' => '*'));
             $model->initReadDB();

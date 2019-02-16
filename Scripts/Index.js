@@ -4,15 +4,12 @@
     });
 
     function initEvent(){
-        setLoadMoreEvent();
+        $("#load_more").length > 0 && setLoadMoreEvent();
     }
     function setLoadMoreEvent() {
         $(window).on("scroll", function(){
             if($("#articles article:last").offset().top <= ($(window).scrollTop() + $(window).innerHeight())) {
                 $(window).off("scroll");
-                if($("#load_more").length == 0) {
-                    $("#articles article:last").append("<div id=\"load_more\">加载中……</div>");
-                }
                 var start_time = $("#articles article:last").children("h4").text();
                 var count = 10;//默认每次加载数量
 

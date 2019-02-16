@@ -28,6 +28,9 @@
                         echo '</article>';
                         $i++;
                     }
+                    if(!empty($start_lt_time)) {
+                        echo  '<div id="load_more"><a href="?count=10&start_lt_time=', $start_lt_time,'">加载更多……</a></div>';
+                    }
                 ?>
             </div>
             <?php require_once 'Category.php'; ?>
