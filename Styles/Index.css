@@ -1,4 +1,5 @@
 #articles {
+    flex:auto;
 }
 .load_more{
     text-align:center;

@@ -48,6 +48,7 @@ header nav a{
     max-width:51.2rem;
     display:flex;
     flex-flow:row nowrap;
+    justify-content:space-between;
 }
 article {
     margin:0 0.5rem;
@@ -74,7 +75,6 @@ article h4{
 #categories{
     margin:0 0.5rem;
     width:auto;
-    max-width:20%;
     list-style:none;
     display:flex;
     flex-flow:column nowrap;
