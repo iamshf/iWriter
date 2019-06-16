@@ -131,7 +131,7 @@ namespace iWriter\Models\Admin {
             }
             if($this->verifySubtitle()) {
                 $sql .= ', subtitle = :subtitle';
-                $params[':subtitle'] = array('value' => $this->_data['subtitle'], 'dataType' => \PDO::PARAM_INT);
+                $params[':subtitle'] = array('value' => $this->_data['subtitle'], 'dataType' => \PDO::PARAM_STR);
             }
             if($this->verifyForeword()) {
                 $sql .= ', foreword = :foreword';
