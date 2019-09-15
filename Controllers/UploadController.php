@@ -11,22 +11,16 @@
  *
  * @author shf
  */
-namespace iWriter\Controllers {
+declare(strict_types=1);
+namespace iWriter\Controllers 
+{
     use iWriter\Controllers\Resource;
     class UploadController extends Resource{
-        public function exec() {
-            $this->get();
-        }
-        public function get(){
+        public function exec(?string $methodName = NULL) {
             $file = '../Uploads/' . $this->_request->_data['path'];
-            $expire = \Conf::CACHE_EXPIRE * 365;
-            
             $this->setContentType();
-            $this->_headers[] = 'Expires: ' . gmdate("D, d M Y H:i:s", time() + $expire) . ' GMT';
-            $this->_headers[] = 'Cache-Control: max-age=' . $expire;
-            
-            $this->_headers[] = 'Last-Modified: ' . gmdate("D, d M Y H:i:s", filemtime($file)) . ' GMT';
-
+            $this->setCacheControl('max-age=' . 365 * \Conf::CACHE_EXPIRE);
+            $this->setLastModifiedSince(filemtime($file));
             $this->_headers[] = 'X-Accel-Redirect: '. mb_substr($file, 2, null, 'UTF-8');
         }
         private function setContentType(){
@@ -55,14 +49,11 @@ namespace iWriter\Controllers {
                     break;
             }
         }
-        
         private function getPath($name){
             $arr = explode('/', $name);
-            return implode('/', 
-                array_map(function($str){
-                    return ucfirst($str);
-                }, $arr)
-            );
+            return implode('/', array_map(function($str){
+                return ucfirst($str);
+            }, $arr));
         }
     }
 }

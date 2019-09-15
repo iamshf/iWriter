@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace iWriter\Controllers {
     use \MiniRest\Resource;
     class InstallController extends Resource {
@@ -14,7 +15,6 @@ namespace iWriter\Controllers {
             $this->_body = $this->render($file);
         }
         public function postJson() {
-            $this->_headers[] = 'Content-Type: application/json';
             $this->_body = '{"code": 1, "msg": "成功"}';
         }
     }

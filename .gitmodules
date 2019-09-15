@@ -1,6 +1,7 @@
 [submodule "CommLib/MiniRest"]
 	path = CommLib/MiniRest
 	url = git@github.com:iamshf/MiniRest.git
+    branch = update_to_php7
 [submodule "CommLib/PasswordCompat"]
 	path = CommLib/PasswordCompat
 	url = git@github.com:ircmaxell/password_compat.git
