@@ -15,10 +15,8 @@
 
                 getPosts({"start_lt_time": start_time, "count": 1 + count}).done(function(data, textStatus, jqXHR) {
                     var length = data["data"].length;
-                    bindPosts(data["data"], (length == count ? length - 1 : length));
-                    if(length == count) {
-                        setLoadMoreEvent();
-                    }
+                    bindPosts(data["data"], (length > count ? length - 1 : length));
+                    length > count && setLoadMoreEvent();
                 }).fail(function(){
                     $("#load_more").text("没有更多……");
                 }).always(function() {
