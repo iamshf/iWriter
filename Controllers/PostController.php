@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
-namespace iWriter\Controllers {
+namespace iWriter\Controllers 
+{
     use iWriter\Controllers\Resource;
     use iWriter\Models\PostModel;
     class PostController extends Resource {

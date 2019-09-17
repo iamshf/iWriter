@@ -16,6 +16,7 @@ class Conf{
     const CACHE_EXPIRE = 86400;
     const CONTROLLER_NAMESPACE = '\\iWriter\\Controllers\\';
     const CONTROLLER_SUFFIX = 'Controller';
+    const UPLOAD_PATH = '/home/shf/mydata/documents/work/project/iWriter/Uploads/';
 
     const SITE_NAME = '';
     const SITE_VERSION = '';
@@ -57,6 +58,7 @@ class Conf{
         });
     }
     private function addDebugLog(string $log = '') {
+        echo $log;return;
         if(self::IS_DEBUG) { echo $log; }
         if(($file = fopen(dirname(__FILE__) . '/../../Log/iWriter.log', 'a')) !== false) {
             fwrite($file, $log . "\r\n");

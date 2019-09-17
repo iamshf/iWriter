@@ -18,13 +18,7 @@ namespace iWriter\Controllers {
         }
         public function getJson() {
             $model = new PostModel(array_merge(array('columns' => 'id,title,subtitle,foreword,gmt_add,gmt_modify'), $this->_request->_data));
-            $result = $model->get();
-            if($result !== false && !empty($result)) {
-                $this->_body = $this->getJsonResult(1, '成功', 200, $result);
-            }
-            else {
-                $this->_body = $this->getJsonResult(0, '请求非法', 404);
-            }
+            $this->_body = !empty($result = $model->get()) ? $this->getJsonResult(1, '成功', 200, $result) : $this->getJsonResult(0, '请求非法', 404);
         }
     }
 }

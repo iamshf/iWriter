@@ -10,43 +10,38 @@
  *
  * @author shf
  */
-namespace iWriter\Controllers\Admin {
+declare(strict_types=1);
+namespace iWriter\Controllers\Admin 
+{
     use iWriter\Controllers\Admin\Resource;
     use iWriter\Models\Admin\UploadModel;
     class UploadController extends Resource{
         public function postJson(){
-            $this->_headers[] = 'Accept:application/json';
             $model = new UploadModel($this->_request->_data);
-            if(($result = $model->verifyUploadRequest()) !== true || ($result = $model->verifyExt()) !== true || ($result = $model->verifyEnv()) !== true) {
-                $this->_body = $this->getResult(2, $result);
-            }
-            else {
-                if(($result = $model->save()) !== false) {
-                    $this->_body = $this->getResult(1, '上传成功', 200, array('url' => $result));
+            if($model->verifyUploadRequest() && $model->verifyExt() && $model->verifyEnv()) {
+                if($model->save()) {
+                    $this->_body = $this->getResult(1, '上传成功', 200, array('url' => $model->_url));
                 }
                 else {
                     $this->_body = $this->getResult(3, '上传失败');
                 }
+            }
+            else {
+                $this->_body = $this->getResult(2, $model->_msg);
             }
         }
         /*为兼容kindeditor*/
         public function postHtml() {
             $this->_headers[] = 'Accept:application/json';
             $model = new UploadModel($this->_request->_data);
-            if(($result = $model->verifyUploadRequest()) !== true || ($result = $model->verifyExt()) !== true || ($result = $model->verifyEnv()) !== true) {
-                $this->_body = '{"error": 1, "message": "' . $result . '"}';
+            if($model->verifyUploadRequest() && $model->verifyExt() && $model->verifyEnv() && $model->save()) {
+                $this->_body = '{"error": 0, "url": "' . $model->_url . '"}';
             }
             else {
-                if(($result = $model->save()) !== false) {
-                    $this->_body = '{"error": 0, "url": "' . $result . '"}';
-                }
-                else {
-                    $this->_body = '{"error": 1, "message": "' . $result . '"}';
-                }
+                $this->_body = '{"error": 1, "message": "' . $model->_msg . '"}';
             }
         }
         public function deleteJson(){
-            $this->_headers[] = 'Accept:application/json';
             $model = new UploadModel($this->_request->_data);
             if($model->verifyFile() && $model->verifyName()) {
                 if($model->delete()) {

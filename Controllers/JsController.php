@@ -16,7 +16,7 @@ namespace iWriter\Controllers
             $this->setLastModifiedSince(filemtime($file));
             $this->_headers[] = 'X-Accel-Redirect: ' . mb_substr($file, 2, null, 'UTF-8');
         }
-        private function getPath($name){
+        private function getPath(string $name){
             if(mb_strpos($name, 'jQueryPlugin', 0, 'UTF-8') !== false) {
                 return $name;
             }

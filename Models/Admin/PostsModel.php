@@ -1,22 +1,20 @@
 <?php
-namespace iWriter\Models\Admin {
+declare(strict_types=1);
+namespace iWriter\Models\Admin 
+{
     use iWriter\Models\Admin\CategoryModel;
     class PostsModel {
         private $_data;
-        public function __construct($data = array()) {
+        public function __construct(array $data = array()) {
             $this->_data = $data;
         }
-
-        public function getViews() {
-            $categories = $this->getCategories();
-            return array(
-                'categories' => $categories !== false && !empty($categories) ? $categories : array()
-            );
-        }
-        private function getCategories() {
+        public function getViews(): array {
             $model = new CategoryModel(array('deep' => '*'));
             $model->initReadDB();
-            return $model->get();
+
+            return array(
+                'categories' => !empty($categories = $model->get()) ? $categories : array()
+            );
         }
     }
 }

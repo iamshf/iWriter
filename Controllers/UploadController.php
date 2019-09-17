@@ -15,7 +15,7 @@ declare(strict_types=1);
 namespace iWriter\Controllers 
 {
     use iWriter\Controllers\Resource;
-    class UploadController extends Resource{
+    class UploadController extends Resource {
         public function exec(?string $methodName = NULL) {
             $file = '../Uploads/' . $this->_request->_data['path'];
             $this->setContentType();
@@ -24,7 +24,7 @@ namespace iWriter\Controllers
             $this->_headers[] = 'X-Accel-Redirect: '. mb_substr($file, 2, null, 'UTF-8');
         }
         private function setContentType(){
-            switch ($this->_request->_data['extension']){
+            switch ($this->_request->_data['extension']) {
                 case 'jpg':
                     $this->_headers[] = 'Content-Type: image/jpeg ';
                     break;
@@ -49,7 +49,7 @@ namespace iWriter\Controllers
                     break;
             }
         }
-        private function getPath($name){
+        private function getPath(string $name) {
             $arr = explode('/', $name);
             return implode('/', array_map(function($str){
                 return ucfirst($str);
