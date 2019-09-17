@@ -11,7 +11,7 @@ namespace iWriter\Controllers
     class JsController extends Resource{
         public function exec(?string $methodName = NULL) {
             $file = '../Scripts/' . $this->getPath($this->_request->_data['name']) . '.js';
-            $this->_headers[] = 'Content-Type: text/javasript; charset=utf-8';
+            $this->_headers[] = 'Content-Type: application/x-javascript; charset=utf-8';
             $this->setCacheControl('max-age=' . 365 * \Conf::CACHE_EXPIRE);
             $this->setLastModifiedSince(filemtime($file));
             $this->_headers[] = 'X-Accel-Redirect: ' . mb_substr($file, 2, null, 'UTF-8');
