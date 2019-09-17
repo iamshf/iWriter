@@ -4,11 +4,13 @@
  *
  * @author shf
  */
-namespace iWriter\Controllers\Admin {
+declare(strict_types=1);
+namespace iWriter\Controllers\Admin 
+{
     use iWriter\Controllers\Resource;
     use iWriter\Models\Admin\UploadModel;
     class UploadFilesController extends Resource{
-        public function exec() {
+        public function exec(?string $methodName = NULL) {
             $current_path = '../Uploads/' . (empty($this->_request->_data['dir']) ? '' : $this->_request->_data['dir'] . '/') . (empty($this->_request->_data['path']) ? '' : $this->_request->_data['path']);
             $current_url = '/upload/' . (empty($this->_request->_data['dir']) ? '' : $this->_request->_data['dir'] . '/') . (empty($this->_request->_data['path']) ? '' : $this->_request->_data['path']);
             $current_dir_path = $this->_request->_data['path'];

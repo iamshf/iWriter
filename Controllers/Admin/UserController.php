@@ -1,25 +1,22 @@
 <?php
-namespace iWriter\Controllers\Admin {
+declare(strict_types=1);
+namespace iWriter\Controllers\Admin 
+{
     use iWriter\Controllers\Admin\Resource;
     use iWriter\Models\Admin\UserModel;
     class UserController extends Resource {
         public function getHtml() {
             $file = '../Views/Admin/Index.html';
-            $expire = \Conf::CACHE_EXPIRE * 86400 ;//缓存一天
-            $this->_headers[] = 'Content-Type: text/html;charset=UTF-8';
-
-            $this->_headers[] = 'Expires: ' . gmdate("D, d M Y H:i:s", time() + $expire) . ' GMT';
-            $this->_headers[] = 'Cache-Control: max-age=' . $expire;
-
-            $this->_headers[] = 'Last-Modified: ' . gmdate("D, d M Y H:i:s", filemtime($file)) . ' GMT';
             $this->_body = $this->render($file);
+
+            $this->setCacheControl('max-age=' . \Conf::CACHE_EXPIRE);
+            $this->setEtag();
+            $this->setLastModifiedSince(filemtime($file));
         }
         public function postJson() {
-            $this->_headers[] = 'Content-Type: application/json';
             $model = new UserModel($this->_request->_data);
             if($model->verifyName() && $model->verifyPwd()) {
-                $result = $model->add();
-                if($result > 0) {
+                if(($result = $model->add()) > 0) {
                     $this->_body = $this->getJsonResult(1, '成功', 201, array('id' => $result));
                 }
                 else {
@@ -31,11 +28,9 @@ namespace iWriter\Controllers\Admin {
             }
         }
         public function putJson() {
-            $this->_headers[] = 'Content-Type: application/json';
             $model = new UserModel($this->_request->_data);
             if($model->verifyId() && ($model->verifyName() || $model->verifyPwd())) {
-                $result = $model->update();
-                if($result > 0) {
+                if($model->update() > 0) {
                     $this->_body = $this->getJsonResult(1, '成功', 200);
                 }
                 else {

@@ -1,19 +1,21 @@
 <?php
-namespace iWriter\Models\Admin {
+declare(strict_types=1);
+namespace iWriter\Models\Admin 
+{
     use iWriter\Common\MyPdo;
     class CategoryModel{
         private $_data;
         private $_myPdo;
-        public function __construct($data = array()){
+        public function __construct(array $data = array()){
             $this->_data = $data;
         }
-        public function __set($k, $v){
+        public function __set(string $k, $v) {
             property_exists($this, $k) ? $this->$k = $v : $this->_data[$k] = $v;
         }
-        public function verifyId(){
+        public function verifyId(): bool {
             return array_key_exists('id', $this->_data) && is_numeric($this->_data['id']) && $this->_data['id'] > 0;
         }
-        public function verifyPID() {
+        public function verifyPID(): bool {
             if(array_key_exists('pid', $this->_data) && is_numeric($this->_data['pid'])){
                 if($this->_data['pid'] > 0) {
                     $params = array(':pid' => array('value' => $this->_data['pid'], 'dataType' => \PDO::PARAM_INT));
@@ -21,25 +23,24 @@ namespace iWriter\Models\Admin {
                 }
                 return $this->_data['pid'] == 0;
             }
-
             return false;
         }
-        public function verifyName(){
+        public function verifyName(): bool {
             return array_key_exists('name', $this->_data) && !empty($this->_data['name']);
         }
-        public function verifyRemark(){
+        public function verifyRemark(): bool {
             return array_key_exists('remark', $this->_data);
         }
-        public function verifyBeforeId() {
+        public function verifyBeforeId(): bool {
             if(array_key_exists('before_id', $this->_data) && is_numeric($this->_data['before_id']) && $this->_data['before_id'] > 0){
                 $sql = 'select @max_rv := rv,@pid := pid,@deep := deep from category where id =  :id limit 1';
                 $params = array(':id' => array('value' => $this->_data['before_id'], 'dataType' => \PDO::PARAM_INT));
-                
+
                 return $this->_myPdo->isExists($sql, $params);
             }
             return false;
         }
-        public function verifyAfterId() {
+        public function verifyAfterId(): bool {
             if(array_key_exists('after_id', $this->_data) && is_numeric($this->_data['after_id']) && $this->_data['after_id'] > 0){
                 $sql = 'select @min_lv := lv,@pid := pid,@deep := deep from category where id =  :id limit 1';
                 $params = array(':id' => array('value' => $this->_data['after_id'], 'dataType' => \PDO::PARAM_INT));
@@ -48,25 +49,24 @@ namespace iWriter\Models\Admin {
             }
             return false;
         }
-        public function lockTable(){
+        public function lockTable(): void {
             $this->_myPdo = MyPdo::init();
             $this->_myPdo->exec('lock table category write');
-            return true;
         }
-        public function unlockTable(){
+        public function unlockTable(): void {
             $this->_myPdo->exec('unlock tables');
         }
-        public function initReadDB(){
+        public function initReadDB(): void {
             $this->_myPdo = MyPdo::init('r');
         }
-        public function isExists(){
+        public function isExists(): bool {
             $sql = 'select id from category where id = :id limit 1';
             $params = array(':id' => array('value' => $this->_data['id'], 'dataType' => \PDO::PARAM_INT));
             $this->initReadDB();
             return $this->_myPdo->isExists($sql, $params);
         }
 
-        public function add() {
+        public function add(): int {
             if($this->verifyAfterId()) {
                 $this->_myPdo->exec('update category set lv = lv + 2 where lv >= @min_lv');
                 $this->_myPdo->exec('update category set rv = rv + 2 where rv > @min_lv');
@@ -96,24 +96,20 @@ namespace iWriter\Models\Admin {
                 ':enabled' => array('value' => ($this->verifyEnabled() && $this->_data['enabled'] > -1 ? $this->_data['enabled'] : '1'), 'dataType' => \PDO::PARAM_STR)
             );
             $this->_myPdo->exec($sql, $params);
-            return $this->_myPdo->lastInsertId();
+            return (int)($this->_myPdo->lastInsertId());
         }
-        public function get() {
-            $columns = $this->verifyColumns() ? $this->_data['columns'] : 'id,name,pid,lv,rv,deep';
-            $sql = 'select ' . $columns . ' from category ';
-            $params = array();
-            $sqlWhere = array();
-
+        public function get(): ?array {
+            $sqlWhere = $params = array();
             if($this->verifyDeep()){
                 if($this->_data['deep'] == '0') {
-                    $this->getBrotherNode($sql, $sqlWhere, $params);
+                    $this->getBrotherNode($sqlWhere, $params);
                 }
-                else if(mb_substr($this->_data['deep'],0,1, 'UTF-8') == '-'){
-                    $this->getAncestorNode($sql, $sqlWhere, $params);
+                else if(mb_substr($this->_data['deep'], 0, 1, 'UTF-8') == '-'){
+                    $this->getAncestorNode($sqlWhere, $params);
                 }
                 else {
                     if(!$this->verifyPID() && !$this->verifyId()) { $this->_data['pid'] = 0; }
-                    $this->getDescendantNode($sql, $sqlWhere, $params);
+                    $this->getDescendantNode($sqlWhere, $params);
                 }
             }
             else {
@@ -127,28 +123,21 @@ namespace iWriter\Models\Admin {
                     $params[':pid'] = array('value' => $this->_data['pid'], 'dataType' => \PDO::PARAM_INT);
                 }
             }
-            if(!$this->verifyEnabled()) {
-                $this->_data['enabled'] = '1';
-            }
-            if($this->verifyEnabled() && $this->_data['enabled'] > -1) {
+            if(($enabled = $this->verifyEnabled() ? $this->_data['enabled'] : 1) > -1) {
                 $sqlWhere[] = 'enabled = :enabled';
-                $params[':enabled'] = array('value' => $this->_data['enabled'], 'dataType' => \PDO::PARAM_STR);
+                $params[':enabled'] = array('value' => $enabled, 'dataType' => \PDO::PARAM_STR);
             }
-            
-            if(count($sqlWhere) > 0) {
-                $sql .= ' where ' . implode(' and ', $sqlWhere);
-            }
-            $sql .= ' order by lv asc';
-            if($this->verifyCount() && $this->_data['count'] != '0'){
+            $sql = 'select ' . ($this->verifyColumns() ? $this->_data['columns'] : 'id,name,pid,lv,rv,deep') . ' from category ' . (!empty($sqlWhere) ? ' where ' . implode(' and ', $sqlWhere) : '') . ' order by lv asc';
+
+            if($this->verifyCount() && $this->_data['count'] != '*') {
                 $sql .= ' limit :count';
                 $params[':count'] = array('value' => (int)$this->_data['count'], 'dataType' => \PDO::PARAM_INT);
             }
-
-            $result = $this->_myPdo->query($sql, $params);
-            return $this->verifyCount() && $this->_data['count'] == 1 ? array($result->fetch(\PDO::FETCH_ASSOC)) : $result->fetchAll(\PDO::FETCH_ASSOC);
-
+            $sth = $this->_myPdo->query($sql, $params);
+            $result = ($this->_data['count'] ?? 0) == 1 ? $sth->fetch(\PDO::FETCH_ASSOC) : $sth->fetchAll(\PDO::FETCH_ASSOC);
+            return is_array($result) && !empty($result) ? $result : null;
         }
-        public function update() {
+        public function update(): int {
             $result = 0;
             $values = array();
             $params = array(':id' => array('value' => $this->_data['id'], 'dataType' => \PDO::PARAM_INT));
@@ -167,9 +156,9 @@ namespace iWriter\Models\Admin {
             if($this->verifyPID() || $this->verifyAfterId() || $this->verifyBeforeId()) {
                 $this->restore();
             }
-            return $result == 0 || $result == 1;
+            return $result;
         }
-        public function delete() {
+        public function delete(): bool {
             $row = $this->_myPdo->query(
                 'select id,lv,rv,enabled from category where id = :id and enabled = :enabled limit 1',
                 array(
@@ -177,7 +166,6 @@ namespace iWriter\Models\Admin {
                     ':enabled' => array('value' => '1', 'dataType' => \PDO::PARAM_STR),
                 )
             )->fetch(\PDO::FETCH_ASSOC);
-
             if($row !== false) {
                 $this->_myPdo->exec(
                     'select @count := count(id) from category where lv between :lv and :rv and enabled = :enabled',
@@ -209,7 +197,7 @@ namespace iWriter\Models\Admin {
             return true;
         }
         //恢复删除的节点
-        public function restore(){
+        public function restore(): bool {
             $row = $this->_myPdo->query(
                 'select id,lv,rv,enabled from category where id = :id and enabled = :enabled limit 1',
                 array(
@@ -248,22 +236,22 @@ namespace iWriter\Models\Admin {
             return true;
         }
 
-        private function verifyEnabled(){
+        private function verifyEnabled(): bool {
             return array_key_exists('enabled', $this->_data) && ($this->_data['enabled'] == '0' || $this->_data['enabled'] == '1' || $this->_data['enabled'] == '-1');
         }
-        private function verifyColumns(){
+        private function verifyColumns(): bool {
             return array_key_exists('columns', $this->_data) && preg_match('/^[a-z]+(,(\ ?)[a-z]+)*$/', $this->_data['columns']);
         }
-        private function verifyCount(){
-            return array_key_exists('count', $this->_data) && is_numeric($this->_data['count']);
+        private function verifyCount(): bool {
+            return array_key_exists('count', $this->_data) && (is_numeric($this->_data['count']) || $this->_data['count'] == '*');
         }
-        private function verifyDeep(){
+        private function verifyDeep(): bool {
             return array_key_exists('deep', $this->_data) && (is_numeric($this->_data['deep']) || $this->_data['deep'] == '*' || $this->_data['deep'] == '-*');
         }
-        private function verifyWidthContents(){
+        private function verifyWidthContents(): bool {
             return array_key_exists('with_contents', $this->_data) && $this->_data['with_contents'] == 1;
         }
-        private function getBrotherNode(&$sql, &$sqlWhere, &$params) {
+        private function getBrotherNode(&$sqlWhere, &$params): void {
             if($this->verifyPID()){
                 $sqlWhere[] = 'pid = :pid';
                 $params[':pid'] = array('value' => $this->_data['pid'], 'dataType' => \PDO::PARAM_INT);
@@ -273,7 +261,7 @@ namespace iWriter\Models\Admin {
                 $params[':id'] = array('value' => $this->_data['id'], 'dataType' => \PDO::PARAM_INT);
             }
         }
-        private function getFatherNode(&$sql, &$sqlWhere, &$params) {
+        private function getFatherNode(&$sqlWhere, &$params): void {
             if($this->verifyId()){
                 $sqlWhere[] = 'id = (select pid from category where id = :id limit 1)';
                 $params[':id'] = array('value' => $this->_data['id'], 'dataType' => \PDO::PARAM_INT);
@@ -284,9 +272,9 @@ namespace iWriter\Models\Admin {
             }
             $this->_data['count'] = 1;
         }
-        private function getAncestorNode(&$sql, &$sqlWhere, &$params){
+        private function getAncestorNode(&$sqlWhere, &$params): void {
             if($this->_data['deep'] == '-1') {
-                $this->getFatherNode($sql, $sqlWhere, $params);
+                $this->getFatherNode($sqlWhere, $params);
             }
             else {
                 if($this->verifyId()) {
@@ -305,7 +293,7 @@ namespace iWriter\Models\Admin {
                 }
             }
         }
-        private function getSonNode(&$sql, &$sqlWhere, &$params) {
+        private function getSonNode(&$sqlWhere, &$params): void {
             if($this->verifyId()){
                 $sqlWhere[] = 'pid = :id';
                 $params[':id'] = array('value' => $this->_data['id'], 'dataType' => \PDO::PARAM_INT);
@@ -315,9 +303,9 @@ namespace iWriter\Models\Admin {
                 $params[':pid'] = array('value' => $this->_data['pid'], 'dataType' => \PDO::PARAM_INT);
             }
         }
-        private function getDescendantNode(&$sql, &$sqlWhere, &$params){
+        private function getDescendantNode(&$sqlWhere, &$params): void {
             if($this->_data['deep'] == 1){
-                $this->getSonNode($sql, $sqlWhere, $params);
+                $this->getSonNode($sqlWhere, $params);
             }
             else {
                 if($this->verifyId()) {

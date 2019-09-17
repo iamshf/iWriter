@@ -1,26 +1,23 @@
 <?php
-namespace iWriter\Controllers\Admin {
+declare(strict_types=1);
+namespace iWriter\Controllers\Admin 
+{
     use iWriter\Controllers\Admin\Resource;
     use iWriter\Models\Admin\CategoryModel;
     class CategoryController extends Resource {
         public function getHtml() {
             $file = '../Views/Admin/Category.html';
-            $expire = \Conf::CACHE_EXPIRE * 86400 ;//缓存一天
-            $this->_headers[] = 'Content-Type: text/html;charset=UTF-8';
-
-            $this->_headers[] = 'Expires: ' . gmdate("D, d M Y H:i:s", time() + $expire) . ' GMT';
-            $this->_headers[] = 'Cache-Control: max-age=' . $expire;
-
-            $this->_headers[] = 'Last-Modified: ' . gmdate("D, d M Y H:i:s", filemtime($file)) . ' GMT';
             $this->_body = $this->render($file);
+
+            $this->setCacheControl('max-age=' . \Conf::CACHE_EXPIRE);
+            $this->setEtag();
+            $this->setLastModifiedSince(filemtime($file));
         }
         public function getJson() {
-            $this->_headers[] = 'Content-Type: application/json';
             $model = new CategoryModel($this->_request->_data);
             $model->initReadDB();
             $result = $model->get();
-
-            if($result !== false && !empty($result)) {
+            if(!empty($result)) {
                 $this->_body = $this->getJsonResult(1, '成功', 200, $result);
             }
             else {
@@ -28,12 +25,10 @@ namespace iWriter\Controllers\Admin {
             }
         }
         public function postJson(){
-            $this->_headers[] = 'Content-Type:application/json';
             $model = new CategoryModel($this->_request->_data);
             $model->lockTable();
             if($model->verifyName() && ($model->verifyBeforeId() || $model->verifyAfterId() || $model->verifyPID())) {
-                $result = $model->add();
-                if($result > 0) {
+                if(($result = $model->add()) > 0) {
                     $this->_body = $this->getJsonResult(1, '成功', 201, array('id' => $result));
                 }
                 else {
@@ -41,8 +36,7 @@ namespace iWriter\Controllers\Admin {
                 }
             }
             else if($model->verifyId() && ($model->verifyPID() || $model->verifyAfterId() || $model->verifyBeforeId())) {
-                $result = $model->restore();
-                if($result) {
+                if($model->restore()) {
                     $this->_body = $this->getJsonResult(1, '成功', 200);
                 }
                 else {
@@ -55,11 +49,10 @@ namespace iWriter\Controllers\Admin {
             $model->unlockTable();
         }
         public function putJson() {
-            $this->_headers[] = 'Content-Type:application/json';
             $model = new CategoryModel($this->_request->_data);
             if($model->verifyId() && ($model->verifyName() || $model->verifyRemark())){
                 $model->lockTable();
-                if($model->update()) {
+                if($model->update() > -1) {
                     $this->_body = $this->getJsonResult(1, '成功', 200);
                 }
                 else {
@@ -72,7 +65,6 @@ namespace iWriter\Controllers\Admin {
             }
         }
         public function deleteJson() {
-            $this->_headers[] = 'Content-Type:application/json';
             $model = new CategoryModel($this->_request->_data);
             if($model->verifyId()) {
                 $model->lockTable();

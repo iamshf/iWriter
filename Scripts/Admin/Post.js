@@ -1,7 +1,7 @@
 ;(function($, window){
     var editor;
+    initEditor();
     $(function(){
-        initEditor();
         initEvent();
     });
 
